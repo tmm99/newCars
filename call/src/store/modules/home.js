@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 19:07:10
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 18:22:21
+ * @LastEditTime: 2019-12-03 18:48:37
  * @Description: 
  */
 import { getMasterBrandList, sidebar } from "@/services/index";
@@ -18,13 +18,6 @@ const mutations = {
     },
     UpdateRlist(state,payload){
         state.Rlist=payload
-    },
-    
-    hideLoading(state,payload){
-      
-            state.loadingName=false
-      
-       
     }
 }
 const actions = {
@@ -33,7 +26,7 @@ const actions = {
         if (res.data.code == 1) {
             let arr = [];
             let brr = [];
-            let all = [];
+            let all = []
             res.data.data.map((item, index) => {
                 arr.push(item.Spelling[0]);
                 arr = [...new Set(arr)];
@@ -47,8 +40,7 @@ const actions = {
                 });
                 all.push({ title: item1, children: brr });
             });
-             commit("UpdateList", all);
-             commit("hideLoading",false)
+             commit("UpdateList", all)
         }
     },
     async sidebar({commit},payload){

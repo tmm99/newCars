@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-03 10:39:55
+ * @LastEditTime: 2019-12-03 18:43:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -9,23 +9,22 @@
 <template>
     <div class="car">
         <div class="cont">
+            <!-- 图片部分 -->
             <div class="img">
-                <img src="http://img2.bitautoimg.com/autoalbum/files/20160831/022/12341202292972_5235269_8.jpg" />
-                <span data-hover="hover">7942张照片</span>
+                <img :src='this.detailData.CoverPhoto' @click="goPic(detailData.SerialID)"/>
+                <span data-hover="hover">{{this.detailData.pic_group_count}}</span>
             </div>
-            <!-- 中 -->
-            <div class="info">
+            <!-- 询问低价 -->
+            <div class="info">               
                 <div>
-                    <p>21.22-32.88
-                    <span>万</span>
-                </p>
-                <p>指导价 28.68-40.18万</p>
+                    <p>{{this.detailData.market_attribute.dealer_price}}</p>
+                    <p>指导价 {{this.detailData.market_attribute.official_refer_price}}</p>
                 </div>
                 <div class="row">
-                    <button >询问低价</button>
+                    <button @click="lowerPrice(detailData.SerialID)">询问低价</button>
                 </div>
             </div>
-            <!-- 下 -->
+            <!-- 相关信息 -->
             <div class="car-list">
                 <div class="type">
                     <span class="all">全部</span>
@@ -33,40 +32,66 @@
                 </div>
             </div>
 
-            <div>
-                <p></p>
-                <ul>
-                    <li></li>
-                </ul>
+            <div v-for="(item,index) in detailData.list" :key="index">
+                <p class="p">
+                    <span>{{item.exhaust_str}}</span>
+                    <span>{{item.max_power_str}}</span>
+                    <span>{{item.inhale_type}}</span>
+                </p>
+                <ul class="ul">
+                    <li>
+                        <p><span>{{item.market_attribute.year}}款</span><span>{{item.car_name}}</span></p>
+                        <p><span>{{item.horse_power}}马力</span><span>{{item.gear_num}}档</span><span>{{item.trans_type}}</span></p>
+                        <p>指导价<span>{{item.market_attribute.dealer_price_max}}</span><span class="twospan">{{item.market_attribute.dealer_price_min}}起</span></p>                     
+                         <p class="price" @click="everyLower">询问底价</p>
+                    </li>
+                </ul> 
             </div>
-
+       
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
 export default {
-    props:{
-
-    },
+    props:{},
     components:{
 
     },
     data(){
         return {
-
+            detailData:[],
+            newId:''
         }
     },
-    computed:{
+    computed:{ 
 
     },
     methods:{
+        //底价路由
+        lowerPrice(lowerId){
+            console.log(lowerId)
+            this.$router.push({path:'/lowerPrice',query:{lowerid:lowerId}})
+        },
+        //顶部图片路由
+          goPic(newId){
+            console.log(newId)
+            this.$router.push({path:'/lowerPrice',query:{id:newId}})
+        },
+        everyLower(){
+            this.$router.push('/lowerPrice')
 
+        }
     },
     created(){
-        // axios.get('https://baojia.chelun.com/v2-car-getInfoAndListById.html').then(res=>{
-        //     console.log(res)
-        // })
+        axios.get('https://baojia.chelun.com/v2-car-getInfoAndListById.html',{params:{SerialID:this.$route.query.SerialID}}).then(res=>{
+            console.log(res.data.data)
+            //如果收到id 并且请求成功 
+            if(res.data.code==1){
+             this.detailData=res.data.data
+            }
+            
+        })
     },
     mounted(){
 
@@ -123,10 +148,6 @@ export default {
     font-weight: 400;
 }
 
-.info p:nth-child(2){
-    font-size: 12px;
-   color: silver;
-}
 .info p{
     padding-top: 8px;
     overflow: hidden;
@@ -168,5 +189,51 @@ export default {
 .all{
     margin-right: 10px;
       color: #00afff;
+}
+
+.ul{
+    height: 110px;
+    background: #fff;
+
+}
+.ul li p:first-child{
+    font-size: 15px;
+    padding: 8px;
+}
+.ul li p:nth-child(2){
+    font-size: 12px;
+    color: silver;
+    padding-left: 8px;
+    padding-bottom: 8px;
+
+}
+.ul li p:nth-child(3){
+    font-size: 12px;
+    color: silver;
+    padding-left: 8px;
+    padding-bottom: 8px;
+    margin-left: 45%;
+   
+}
+
+.twospan{
+    color: red;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.p{
+    height: 20px;
+    line-height: 20px;
+    background: #eee;
+    width: 100%;
+}
+.price{
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    color: #00afff;
+    font-size: 18px;
 }
 </style>
