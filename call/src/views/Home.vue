@@ -2,21 +2,24 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 18:49:18
+ * @LastEditTime: 2019-12-03 19:10:36
  * @Description: 
  -->
 <template>
   <div class="home">
+    <!-- loading 组件 -->
     <Loading v-show="loadingName"></Loading>
     <div class="scroll" ref="roll">
       <div class="roll">
         <List v-for="(item,index) in list" :key="index" :data="item" ref="A" :ball="ball"></List>
       </div>
     </div>
+  <!-- 楼层组件 -->
     <div class="floor" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
       <p>#</p>
       <p v-for="(item,index) in list" :key="index" :class="index" @click="to(index)">{{item.title}}</p>
     </div>
+    <!-- 侧边栏组件 -->
     <div :class="[isShow?'show':'shade']" class="box">
       <PopUp v-for="(item,index) in Rlist " :key="index" :item="item" :backs="backs" ></PopUp>
     </div>
