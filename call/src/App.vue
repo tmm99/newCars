@@ -2,11 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
-<<<<<<< HEAD
- * @LastEditTime: 2019-12-02 18:44:58
-=======
- * @LastEditTime: 2019-12-02 20:25:58
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
+ * @LastEditTime: 2019-12-03 16:31:43
  * @Description: 
  -->
 <template>
@@ -17,7 +13,7 @@
 
 <style lang="scss">
 html {
-  font-size: calc(100vm / 750 * 100);
+  font-size: calc(100vw / 750 * 100);
   width: 100%;
   height: 100%;
 }
@@ -29,9 +25,6 @@ body {
 #app{
   width: 100%;
   height: 100%;
-<<<<<<< HEAD
-=======
   overflow: hidden;
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
 }
 </style>

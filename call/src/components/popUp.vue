@@ -2,11 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
  * @LastEditors: 席鹏昊
-<<<<<<< HEAD
- * @LastEditTime: 2019-12-01 20:35:02
-=======
- * @LastEditTime: 2019-12-03 10:43:24
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
+ * @LastEditTime: 2019-12-03 18:39:45
  * @Description: 
  -->
 <template>
@@ -38,10 +34,6 @@ export default {
       this.backs();
     },
     to(i,item) {
-<<<<<<< HEAD
-        console.log(item)
-=======
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
       this.$router.push({path:"/details",query:{SerialID:i}});
      
     }
@@ -60,8 +52,8 @@ export default {
 }
 .title {
   width: 100%;
-  height: 45px;
-  line-height: 45px;
+  height: .82rem;
+  line-height: .82rem;
   background: #ccc;
 }
 .content {
@@ -69,12 +61,13 @@ export default {
   flex: 1;
   .list {
     width: 100%;
-    height: 80px;
+    height: 1.4rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: .02rem solid #ccc;
+    
     p:nth-child(1) {
-      width: 30%;
+      width: 1.8rem;
       height: 100%;
       img {
         width: 100%;
@@ -91,7 +84,7 @@ export default {
         height: 60%;
         display: flex;
         align-items: center;
-        font-size: 20px;
+        font-size: .34rem;
       }
       span:last-child {
         width: 100%;
@@ -99,9 +92,10 @@ export default {
         color: red;
         display: flex;
         align-items: flex-start;
-        font-size: 12px;
+        font-size: .28rem;
       }
     }
   }
+ 
 }
 </style>

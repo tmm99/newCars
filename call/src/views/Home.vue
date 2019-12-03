@@ -1,58 +1,24 @@
 <!--
-<<<<<<< HEAD
- * @Author: your name
- * @Date: 2019-12-03 08:48:52
- * @LastEditTime: 2019-12-03 10:43:18
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \call\src\views\Home.vue
- -->
-<template>
-  <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Detail></Detail>
-  </div>
-</template>
-
-<script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-// import List from '../components/list.vue'
-import Detail from '../views/detail/Detail.vue'
-
-export default {
-  name: 'home',
-  components: {
-    Detail
-    // List
-    // HelloWorld
-  }
-}
-</script>
-<style scoped lang="css">
-  .home{
-    width: 100%;
-    height: 100%;
-  }
-=======
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 10:38:06
+ * @LastEditTime: 2019-12-03 18:27:23
  * @Description: 
  -->
 <template>
-  <div class="home" ref="roll">
-    <div class="roll">
-      <List v-for="(item,index) in list" :key="index" :data="item" ref="A" :ball="ball"></List>
+  <div class="home">
+    <Loading v-show="loadingName"></Loading>
+    <div class="scroll" ref="roll">
+      <div class="roll">
+        <List v-for="(item,index) in list" :key="index" :data="item" ref="A" :ball="ball"></List>
+      </div>
     </div>
-    <div class="floor">
+    <div class="floor" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
       <p>#</p>
-      <p v-for="(item,index) in list" :key="index" @click="to(index)">{{item.title}}</p>
+      <p v-for="(item,index) in list" :key="index" :class="index" @click="to(index)">{{item.title}}</p>
     </div>
     <div :class="[isShow?'show':'shade']" class="box">
-      <PopUp v-for="(item,index) in Rlist " :key="index" :item="item" :backs="backs"></PopUp>
+      <PopUp v-for="(item,index) in Rlist " :key="index" :item="item" :backs="backs" ></PopUp>
     </div>
   </div>
 </template>
@@ -60,19 +26,21 @@ export default {
 import BScroll from "better-scroll";
 import List from "../components/list";
 import PopUp from "../components/popUp";
-import { mapState, mapActions} from "vuex";
+import Loading from "../components/loading";
+import { mapState, mapActions } from "vuex";
 export default {
   props: {},
-  components: { List, PopUp },
+  components: { List, PopUp ,Loading },
   data() {
     return {
-      isShow: false,
+      isShow: false
     };
   },
   computed: {
     ...mapState({
       list: state => state.home.list,
-      Rlist: state => state.home.Rlist
+      Rlist: state => state.home.Rlist,
+      loadingName:state=>state.home.loadingName
     })
   },
   methods: {
@@ -85,12 +53,27 @@ export default {
       let el = LH[i].$el;
       this.scroll.scrollToElement(el, 1000, 0, 0);
     },
-    ball(id, i) {
+    ball(id) {
       this.sidebar(id);
       this.isShow = true;
     },
     backs() {
       this.isShow = false;
+    },
+    touchstart(e) {
+      
+    },
+    touchmove(e) {
+      let arr=["166","183","205","223","245","272","290","315","335","358","378","402","426","449","467","488","506","534","555","579","600"];
+      arr.map((item,index)=>{
+        if(e.touches[0].pageY>item&&e.touches[0].pageY<item+1){
+              let LH = this.$refs.A;
+               let el = LH[index].$el;
+               this.scroll.scrollToElement(el,0, 0, 0);
+        }
+      })
+    },
+    touchend(e) {
     }
   },
   created() {
@@ -112,19 +95,26 @@ export default {
   height: 100%;
   position: relative;
 }
+.scroll {
+  width: 100%;
+  height: 100%;
+}
 .roll {
   width: 100%;
   height: auto;
 }
 .floor {
+  width: 0.4rem;
   position: fixed;
   top: 50%;
-  right: 10px;
+  right: .20rem;
   transform: translateY(-50%);
   height: auto;
   color: #666666;
+  text-align: center;
   p {
-    line-height: 22px;
+    font-size: 0.14rem;
+    line-height: 0.4rem;
   }
 }
 .box {
@@ -147,5 +137,4 @@ export default {
   transition-timing-function: linear;
   transform: translateX(0%);
 }
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
 </style>

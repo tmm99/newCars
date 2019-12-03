@@ -3,7 +3,7 @@ import { compileToFunctions } from 'vue-template-compiler';
  * @Author: 席鹏昊
  * @Date: 2019-11-29 19:45:23
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-11-30 21:12:55
+ * @LastEditTime: 2019-12-03 18:40:05
  * @Description: 
  -->
 <template>
@@ -13,28 +13,45 @@ import { compileToFunctions } from 'vue-template-compiler';
     </p>
     <div class="content" v-for="(item,index) in data.children" :key="index" @click="balls(item)">
       <p>
-        <img :src="item.CoverPhoto" alt />
+        <img  v-lazy="item.CoverPhoto"  />
+        <!-- <img :src="item.CoverPhoto" alt /> -->
       </p>
       <p>{{item.Name}}</p>
     </div>
   </div>
 </template>
 <script>
-// 111
+import Vue from "vue";
+import { Lazyload, Loading } from 'vant';
+import loader from 'sass-loader';
+Vue.use(Lazyload,{
+  preload:2,
+  loading:"http://cdn.duitang.com/uploads/item/201510/17/20151017095028_eGJMw.thumb.700_0.jpeg",
+  error:"http://cdn.duitang.com/uploads/item/201507/09/20150709130218_F3Uf8.jpeg"
+});
+
 export default {
-  props: ["data","ball"],
-  components: {},
+  props: ["data", "ball"],
   data() {
-    return {};
+    return {
+     
+    };
   },
   computed: {},
   methods: {
-      balls(item){
-
-        this.ball(item.MasterID,1)
-      }
+    balls(item) {
+      this.ball(item.MasterID, 1);
+    },
+    imgs() {
+      this.data.children.map(item => {
+        this.imageList = [];
+        this.imageList.push(item.CoverPhoto);
+      });
+    }
   },
-  created() {},
+  created() {
+    this.imgs();
+  },
   mounted() {}
 };
 </script>
@@ -42,14 +59,17 @@ export default {
 .list {
   width: 100%;
   height: auto;
+  div:last-child {
+    border: 0;
+  }
 }
 .title {
   width: 100%;
-  height: 45px;
+  height: .82rem;
   background: #ccc;
-  line-height: 45px;
+  line-height: .82rem;
   b {
-    margin-left: 10px;
+    margin-left:.20rem;
   }
 }
 .content {
@@ -57,10 +77,10 @@ export default {
   width: 90%;
   height: auto;
   display: flex;
-  border-bottom: .5px solid #ccc;
+  border-bottom: .02rem solid #ccc;
   p:nth-child(1) {
     width: 15%;
-    height: 60px;
+    height: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
