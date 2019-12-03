@@ -1,45 +1,8 @@
 <!--
-<<<<<<< HEAD
- * @Author: your name
- * @Date: 2019-12-03 08:48:52
- * @LastEditTime: 2019-12-03 10:43:18
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \call\src\views\Home.vue
- -->
-<template>
-  <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Detail></Detail>
-  </div>
-</template>
-
-<script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-// import List from '../components/list.vue'
-import Detail from '../views/detail/Detail.vue'
-
-export default {
-  name: 'home',
-  components: {
-    Detail
-    // List
-    // HelloWorld
-  }
-}
-</script>
-<style scoped lang="css">
-  .home{
-    width: 100%;
-    height: 100%;
-  }
-=======
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 10:38:06
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-03 11:31:24
  * @Description: 
  -->
 <template>
@@ -147,5 +110,4 @@ export default {
   transition-timing-function: linear;
   transform: translateX(0%);
 }
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
 </style>
