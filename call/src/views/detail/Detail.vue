@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-03 18:43:41
+ * @LastEditTime: 2019-12-03 21:00:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -30,13 +30,13 @@
                     <span class="all">全部</span>
                     <span>2019</span>
                 </div>
-            </div>
 
             <div v-for="(item,index) in detailData.list" :key="index">
-                <p class="p">
+                <p class="p" >
                     <span>{{item.exhaust_str}}</span>
                     <span>{{item.max_power_str}}</span>
                     <span>{{item.inhale_type}}</span>
+                     
                 </p>
                 <ul class="ul">
                     <li>
@@ -46,8 +46,13 @@
                          <p class="price" @click="everyLower">询问底价</p>
                     </li>
                 </ul> 
-            </div>
-       
+                 </div>        
+         </div>
+        <!-- 底部询问最低价 -->
+        <div class="bottom" @click="bottomPrice">
+            <p>询问底价</p>
+            <p>本地经销商为你报价</p>
+        </div>
         </div>
     </div>
 </template>
@@ -76,11 +81,14 @@ export default {
         //顶部图片路由
           goPic(newId){
             console.log(newId)
-            this.$router.push({path:'/lowerPrice',query:{id:newId}})
+            this.$router.push({path:'/goPic',query:{id:newId}})
         },
         everyLower(){
             this.$router.push('/lowerPrice')
 
+        },
+        bottomPrice(){
+            
         }
     },
     created(){
@@ -98,16 +106,17 @@ export default {
     }
 }
 </script>
-<style scoped lang="css">
+<style scoped >
     .car{
         width: 100%;
         height: 100%;
         background: #eee;
+        overflow-y: scroll;
     }
-    .cont{
-          width: 100%;
-        height: 100%;
-    }
+  
+   .tabel{
+       height: 50px;
+   }
     .img{
         position: relative;
         height: 140px;
@@ -154,7 +163,10 @@ export default {
     text-overflow: ellipsis;
  
 }
-
+.car-list{
+    width: 100%;
+    height: 100%;
+}
 .row{
     width: 50%;
     /* background: #00afff; */
@@ -235,5 +247,27 @@ export default {
     border-top: 1px solid #eee;
     color: #00afff;
     font-size: 18px;
+}
+
+.bottom {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 99;
+    background: #3aacff;
+    height: 35px;
+    color: #fff;
+    /* line-height: 40px; */
+    text-align: center;
+    padding-top: 8px;
+}
+.bottom p:first-child{
+    font-size: 14px;
+    
+}
+.bottom p:nth-child(2){
+    font-size: 11px;
+    padding-top: 4px;
+
 }
 </style>
