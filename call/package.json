@@ -8,6 +8,10 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+<<<<<<< HEAD
+=======
+    "better-scroll": "^1.15.2",
+>>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
     "core-js": "^3.4.3",
     "vant": "^2.2.15",
     "vue": "^2.6.10",

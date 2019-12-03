@@ -2,7 +2,11 @@
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
  * @LastEditors: 席鹏昊
+<<<<<<< HEAD
  * @LastEditTime: 2019-12-01 20:35:02
+=======
+ * @LastEditTime: 2019-12-03 10:43:24
+>>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
  * @Description: 
  -->
 <template>
@@ -34,7 +38,10 @@ export default {
       this.backs();
     },
     to(i,item) {
+<<<<<<< HEAD
         console.log(item)
+=======
+>>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
       this.$router.push({path:"/details",query:{SerialID:i}});
      
     }
