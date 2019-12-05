@@ -2,12 +2,12 @@
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 18:48:09
+ * @LastEditTime: 2019-12-04 17:05:07
  * @Description: 
  -->
 <template>
   <div class="popUp">
-    <p class="title" @click="back">{{item.GroupName}}</p>
+    <p class="title" @click="back"><span>{{item.GroupName}}</span></p>
     <div class="content">
       <div class="list" v-for="(item1,index1) in item.GroupList" :key="index1" @click="to(item1.SerialID,item1)">
         <p>
@@ -49,12 +49,20 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  
 }
 .title {
   width: 100%;
-  height: .82rem;
-  line-height: .82rem;
-  background: #ccc;
+  height: .48rem;
+  line-height: .48rem;
+  background: #f2f2f2;
+  color: #717171;
+  font-size: .28rem;
+  span{
+    margin-left: 1px;
+      padding-left: .3rem;
+  }
+
 }
 .content {
   width: 100%;
@@ -64,11 +72,12 @@ export default {
     height: 1.4rem;
     display: flex;
     align-items: center;
-    border-bottom: .02rem solid #ccc;
+    border-bottom: .02rem solid #ddd;
     
     p:nth-child(1) {
+      margin: 0 .1rem 0 .2rem;
       width: 1.8rem;
-      height: 100%;
+      height: 1.2rem;
       img {
         width: 100%;
         height: 100%;
@@ -85,6 +94,7 @@ export default {
         display: flex;
         align-items: center;
         font-size: .34rem;
+        color: #5f687a;
       }
       span:last-child {
         width: 100%;

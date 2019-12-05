@@ -3,7 +3,7 @@ import { compileToFunctions } from 'vue-template-compiler';
  * @Author: 席鹏昊
  * @Date: 2019-11-29 19:45:23
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 18:40:05
+ * @LastEditTime: 2019-12-04 16:50:30
  * @Description: 
  -->
 <template>
@@ -65,35 +65,37 @@ export default {
 }
 .title {
   width: 100%;
-  height: .82rem;
-  background: #ccc;
-  line-height: .82rem;
+  height: .4rem;
+  background: #f4f4f4;;
+  line-height: .4rem;
+  font-size: .28rem;
   b {
-    margin-left:.20rem;
+    margin-left:.3rem;
+    color: #aaa;
   }
 }
 .content {
-  margin: 0 auto;
+  margin: 0 .3rem;
   width: 90%;
-  height: auto;
   display: flex;
-  border-bottom: .02rem solid #ccc;
+  border-bottom: 1px solid #ddd;
   p:nth-child(1) {
     width: 15%;
     height: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-
     img {
-      width: 70%;
-      height: 70%;
+    
+      height: .8rem;
     }
   }
   p:last-child {
     display: flex;
     flex: 1;
     align-items: center;
+    font-size: .32rem;
+    padding-left: .4rem;
   }
 }
 </style>

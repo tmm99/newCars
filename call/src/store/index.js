@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 19:04:12
+ * @LastEditTime: 2019-12-04 11:08:14
  * @Description: 
  */
 import Vue from 'vue'
@@ -13,10 +13,13 @@ Vue.use(Vuex)
 import home from "./modules/home";
 //引入pic
 import pic from "./modules/pic";
+//引入
+import detail from "./modules/detail";
 export default new Vuex.Store({
   modules: {
     home,
-    pic
+    pic,
+    detail
   },  
   plugins:[createLogger()]
 })
