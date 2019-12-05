@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-03 21:00:59
+ * @LastEditTime: 2019-12-04 08:28:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -28,7 +28,7 @@
             <div class="car-list">
                 <div class="type">
                     <span class="all">全部</span>
-                    <span>2019</span>
+                    <span >2019</span>
                 </div>
 
             <div v-for="(item,index) in detailData.list" :key="index">
@@ -89,7 +89,11 @@ export default {
         },
         bottomPrice(){
             
-        }
+        },
+        //高亮
+        // hight(){
+
+        // }
     },
     created(){
         axios.get('https://baojia.chelun.com/v2-car-getInfoAndListById.html',{params:{SerialID:this.$route.query.SerialID}}).then(res=>{
@@ -270,4 +274,5 @@ export default {
     padding-top: 4px;
 
 }
+
 </style>
