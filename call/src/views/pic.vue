@@ -3,37 +3,80 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 20:38:27
+ * @LastEditTime: 2019-12-05 23:38:40
  * @Description: 
  -->
 <template>
   <div class="pic">
     <div class="title">
-      <p>颜色</p>
-      <p>车款</p>
+      <p @click="to">
+        <span>颜色</span>
+        <span class="iconfont">&#xe69b;</span>
+      </p>
+      <p @click="toCar">
+        <span>车款</span>
+        <span class="iconfont">&#xe69b;</span>
+      </p>
     </div>
     <div class="main">
-      <div class="img" v-for="(item,index) in list" :key="index">
+      <div class="img" :v-if="list.length" v-for="(item,index) in list" :key="index">
         <div>
-          <p v-for="(item1,index1) in item.List" :key="index1">
-            <img
-              src="http://img3.bitautoimg.com/autoalbum/files/20181124/920/201811241542274227344_6387126_{0}.jpg"
-              alt
-            />
+          <p
+            v-for="(item1,index1) in item.List"
+            :key="index1"
+            :style="{
+            background:'url('+item1.Url+')',
+            backgroundSize:'cover',  
+            backgroundRepeat:'no-repeat',
+            backgroundPosition:'center'}"
+            class="imgS"
+          >
+            <span v-if="index1==0">{{item.Name}}</span>
+            <span v-if="index1==0">{{item.Count}}></span>
           </p>
         </div>
       </div>
     </div>
+    <transition name="scroll-top">
+      <div v-show="judgeC" class="colour">
+        <Hue :judgeC.sync="judgeC"></Hue>
+      </div>
+    </transition>
+    <transition name="scroll-top">
+      <div v-show="tie" class="car">
+        <Tie :tie.sync="tie"></Tie>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+//引入颜色组件
+import Hue from "./hue";
+//引入车款组件
+import Tie from "./tie";
 import Imgs from "@/components/img.vue";
 export default {
-  props: {},
-  components: { Imgs },
+  components: { Imgs, Hue, Tie },
   data() {
-    return {};
+    return {
+      // 控制颜色组件
+      judgeC: false,
+      //控制车系组件
+      tie: false
+    };
+  },
+  watch: {
+    //监听judgeC 的变化
+    judgeC() {
+      //重新渲染页面
+      this.getImageList(this.$route.query.id);
+    },
+     //监听tie 的变化
+    tie() {
+      //重新渲染页面
+      this.getImageList(this.$route.query.id);
+    }
   },
   computed: {
     ...mapState({
@@ -43,16 +86,33 @@ export default {
   methods: {
     ...mapActions({
       getImageList: "pic/getImageList"
-    })
+    }),
+    //跳到颜色页面
+    to() {
+      // this.$router.push(`/hue?SerialID=${this.$route.query.id}`);
+      this.judgeC = true;
+    },
+    //跳到车系页面
+    toCar() {
+      // this.$router.push(`/tie?id=${this.$route.query.id}`);
+      this.tie = true;
+    }
   },
   created() {
-    this.list = this.getImageList(this.$route.query.id);
-    console.log(this.list);
+    this.getImageList(this.$route.query.id);
   },
   mounted() {}
 };
 </script>
 <style scoped lang="scss">
+.scroll-top-enter,
+.scroll-top-leave-to {
+  transform: translate3d(0, 100%, 0);
+}
+.scroll-top-enter-active,
+.scroll-top-leave-active {
+  transition: transform 0.3s linear;
+}
 .pic {
   width: 100%;
   height: 100%;
@@ -62,40 +122,61 @@ export default {
 }
 .title {
   width: 100%;
-  height: 42px;
+  height: 0.8rem;
   border-bottom: 1px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
- flex-wrap: wrap;
+  flex-shrink: 0;
   p {
     flex: 1;
     text-align: center;
-    font-size: 16px;
+    font-size: 0.28rem;
+    display: flex;
+    justify-content: center;
+    .iconfont {
+      line-height: 0.3rem;
+      color: #ccc;
+    }
   }
   p:first-child {
-    border-right: 1px solid;
+    border-right: 1px solid #ececec;
   }
 }
 .main {
   width: 100%;
   flex: 1;
-  o
-  .img {
+}
+.img {
+  margin-top: 0.2rem;
+  width: 100%;
+  height: auto;
+  div {
     width: 100%;
-    height: 200px;
-    div {
-      width: 33%;
-      height: 50px;
-      p {
-        width: 100%;
-        height: 100%;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    p {
+      width: 2.46rem;
+      height: 2.46rem;
+      margin: 0.02rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
+}
+.imgS span {
+  color: #fff;
+  font-size: 0.28rem;
+}
+.colour,
+.car {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

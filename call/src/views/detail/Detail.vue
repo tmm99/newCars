@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-04 22:20:10
+ * @LastEditTime: 2019-12-05 23:08:16
  * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -71,12 +71,14 @@
 <script>
 //引入vuex
 import { mapState, mapActions, mapMutations } from "vuex";
+
 export default {
   props: {},
   components: {},
   data() {
     return {
       newId: "",
+      //刚进页面的数据
       name: "全部"
     };
   },
@@ -116,8 +118,6 @@ export default {
   },
   created() {
     this.getInfoAndListById(this.$route.query.SerialID);
-
-    console.log(this.list);
   }
 };
 </script>

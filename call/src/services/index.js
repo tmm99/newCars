@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 19:00:34
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 11:02:43
+ * @LastEditTime: 2019-12-05 12:02:00
  * @Description: 
  */
 //主业数据
@@ -13,3 +13,5 @@ export * from "./modules/sidebar";
 export * from "./modules/pic";
 //详情数据
 export * from "./modules/detail";
+//颜色数据
+export * from "./modules/hue";

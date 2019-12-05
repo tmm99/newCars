@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-04 11:03:13
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 22:15:25
+ * @LastEditTime: 2019-12-05 20:52:36
  * @Description: 
  */
 import { getInfoAndListById } from '@/services/index';
@@ -63,27 +63,21 @@ const mutations = {
         state.year=[];
         //拿到年份
         let year = payload.list.map(item => item.market_attribute.year);
-        console.log(year, "nian")
         //去重 拿到应有的年份
         state.year = state.year.concat(["全部"],[...new Set(year)]);
-        console.log(state.year, "state")
         let arr = []
         if (state.current === "全部") {
             arr = payload.list
         } else {
             arr = payload.list.filter(item => item.market_attribute.year == state.current)
         }
-        console.log(arr)
         //排序
         let newSort = sortList(arr)
         //格式化数据
         state.Slist = concatList(newSort)
     },
     UpCurrent(state,payload){
-        state.current=payload
-        
-        // console.log(this.commit("UpDateState"),"9+++++")
-        console.log(payload)
+        state.current=payload;
     }
 }
 const actions = {
