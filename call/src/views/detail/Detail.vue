@@ -1,65 +1,12 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
-<<<<<<< HEAD
- * @LastEditTime: 2019-12-04 08:28:32
+ * @LastEditTime: 2019-12-05 18:58:06
  * @LastEditors: Please set LastEditors
-=======
- * @LastEditTime: 2019-12-04 22:20:10
- * @LastEditors: 席鹏昊
->>>>>>> b079d44aa8e39bbe3cd4f07a44289fe4a0780251
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
  -->
 <template>
-<<<<<<< HEAD
-    <div class="car">
-        <div class="cont">
-            <!-- 图片部分 -->
-            <div class="img">
-                <img :src='this.detailData.CoverPhoto' @click="goPic(detailData.SerialID)"/>
-                <span data-hover="hover">{{this.detailData.pic_group_count}}</span>
-            </div>
-            <!-- 询问低价 -->
-            <div class="info">               
-                <div>
-                    <p>{{this.detailData.market_attribute.dealer_price}}</p>
-                    <p>指导价 {{this.detailData.market_attribute.official_refer_price}}</p>
-                </div>
-                <div class="row">
-                    <button @click="lowerPrice(detailData.SerialID)">询问低价</button>
-                </div>
-            </div>
-            <!-- 相关信息 -->
-            <div class="car-list">
-                <div class="type">
-                    <span class="all">全部</span>
-                    <span >2019</span>
-                </div>
-
-            <div v-for="(item,index) in detailData.list" :key="index">
-                <p class="p" >
-                    <span>{{item.exhaust_str}}</span>
-                    <span>{{item.max_power_str}}</span>
-                    <span>{{item.inhale_type}}</span>
-                     
-                </p>
-                <ul class="ul">
-                    <li>
-                        <p><span>{{item.market_attribute.year}}款</span><span>{{item.car_name}}</span></p>
-                        <p><span>{{item.horse_power}}马力</span><span>{{item.gear_num}}档</span><span>{{item.trans_type}}</span></p>
-                        <p>指导价<span>{{item.market_attribute.dealer_price_max}}</span><span class="twospan">{{item.market_attribute.dealer_price_min}}起</span></p>                     
-                         <p class="price" @click="everyLower">询问底价</p>
-                    </li>
-                </ul> 
-                 </div>        
-         </div>
-        <!-- 底部询问最低价 -->
-        <div class="bottom" @click="bottomPrice">
-            <p>询问底价</p>
-            <p>本地经销商为你报价</p>
-        </div>
-=======
   <div class="car">
     <div class="cont">
       <!-- 图片部分 -->
@@ -89,7 +36,6 @@
             @click="cut(item)"
             :class="{all:name==item}"
           >{{item}}</span>
->>>>>>> b079d44aa8e39bbe3cd4f07a44289fe4a0780251
         </div>
       </div>
 
@@ -116,7 +62,7 @@
         </ul>
       </div>
     </div>
-    <div class="footer">
+    <div class="footer" @click="bottomPrice">
       <p>询问低价</p>
       <p>本地经销商为你报价</p>
     </div>
@@ -131,57 +77,31 @@ export default {
   data() {
     return {
       newId: "",
-      name: "全部"
+      name: "全部",
+      // carName:''
     };
   },
   computed: {
     ...mapState({
       detailData: state => state.detail.list,
       list: state => state.detail.Slist,
-      year: state => state.detail.year
+      year: state => state.detail.year,
+      
     })
   },
   methods: {
     //底价路由
     lowerPrice(lowerId) {
       console.log(lowerId);
-      this.$router.push({ path: "/lowerPrice", query: { lowerid: lowerId } });
+      this.$router.push({ path: "/lowPrice", query: { lowerid: lowerId} });
     },
     //顶部图片路由
     goPic(newId) {
       console.log(newId);
       this.$router.push({ path: "/lowerPrice", query: { id: newId } });
     },
-<<<<<<< HEAD
-    computed:{ 
-
-    },
-    methods:{
-        //底价路由
-        lowerPrice(lowerId){
-            console.log(lowerId)
-            this.$router.push({path:'/lowerPrice',query:{lowerid:lowerId}})
-        },
-        //顶部图片路由
-          goPic(newId){
-            console.log(newId)
-            this.$router.push({path:'/goPic',query:{id:newId}})
-        },
-        everyLower(){
-            this.$router.push('/lowerPrice')
-
-        },
-        bottomPrice(){
-            
-        },
-        //高亮
-        // hight(){
-
-        // }
-=======
     everyLower() {
-      this.$router.push("/lowerPrice");
->>>>>>> b079d44aa8e39bbe3cd4f07a44289fe4a0780251
+      this.$router.push("/lowPrice");
     },
     //结构vuex方法
     ...mapActions({
@@ -194,34 +114,17 @@ export default {
       this.name = i;
       this.UpCurrent(i);
       this.getInfoAndListById(this.$route.query.SerialID);
+    },
+    bottomPrice(){
+       this.$router.push("/lowPrice");
     }
-<<<<<<< HEAD
-}
-</script>
-<style scoped >
-    .car{
-        width: 100%;
-        height: 100%;
-        background: #eee;
-        overflow-y: scroll;
-    }
-  
-   .tabel{
-       height: 50px;
-   }
-    .img{
-        position: relative;
-        height: 140px;
-        overflow: hidden;
-       }
-       
-=======
   },
   created() {
     this.getInfoAndListById(this.$route.query.SerialID);
->>>>>>> b079d44aa8e39bbe3cd4f07a44289fe4a0780251
-
+  // console.log(this.$route.query.itemName)
     console.log(this.list);
+    // this.carName=this.$route.query.itemName
+    // console.log(this.carName)
   }
 };
 </script>
@@ -240,15 +143,6 @@ export default {
   overflow: hidden;
   overflow-y: scroll;
 }
-<<<<<<< HEAD
-.car-list{
-    width: 100%;
-    height: 100%;
-}
-.row{
-    width: 50%;
-    /* background: #00afff; */
-=======
 .footer {
   width: 100%;
   height: 1.19rem;
@@ -258,7 +152,6 @@ export default {
   justify-content: center;
   align-items: center;
   p {
->>>>>>> b079d44aa8e39bbe3cd4f07a44289fe4a0780251
     color: #fff;
   }
   p:first-child {

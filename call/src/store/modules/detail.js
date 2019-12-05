@@ -1,8 +1,8 @@
 /*
  * @Author: 席鹏昊
  * @Date: 2019-12-04 11:03:13
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 22:15:25
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-05 18:54:42
  * @Description: 
  */
 import { getInfoAndListById } from '@/services/index';
@@ -12,6 +12,7 @@ const state = {
     Slist: [],//当前年份数据
     year: [],//所有年份
     current: "全部",//你所在的年份
+    carName:""   //传到底价的车名
 }
 //格式化数据
 function concatList(list) {
@@ -61,6 +62,8 @@ const mutations = {
     UpDateState(state, payload) {
         state.list = payload;
         state.year=[];
+        state.carName=payload.AliasName
+        console.log(state.carName)
         //拿到年份
         let year = payload.list.map(item => item.market_attribute.year);
         console.log(year, "nian")
@@ -91,8 +94,8 @@ const actions = {
         let res = await getInfoAndListById(payload)
         if (res.data.code === 1) {
             commit("UpDateState", res.data.data)
-
         }
+        // console.log(res.data.data.AliasName)
     }
 }
 export default {

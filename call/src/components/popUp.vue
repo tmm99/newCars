@@ -1,8 +1,8 @@
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 17:05:07
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-05 18:44:06
  * @Description: 
  -->
 <template>
@@ -33,12 +33,13 @@ export default {
     back() {
       this.backs();
     },
-    to(i,item) {
+    to(i,item1) {
       this.$router.push({path:"/details",query:{SerialID:i}});
-     
     }
   },
-  created() {},
+  created() {
+    console.log()
+  },
   mounted() {}
 };
 </script>
