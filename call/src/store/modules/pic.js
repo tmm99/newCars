@@ -1,8 +1,8 @@
 /*
  * @Author: 席鹏昊
  * @Date: 2019-12-03 09:11:49
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 20:07:27
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-06 18:48:11
  * @Description: 
  */
 
@@ -10,13 +10,21 @@
 import { getImageList } from "@/services/index";
 
 const state = {
-    list: []
+    list: [],
+    loadingName:true
+
 }
 const mutations = {
     //详情数据的更改
     upDateList(state, payload) {
         state.list = payload
+        console.log(state.list)
+    },
+     //loading方法
+     headLoading(state,payload){
+        state.loadingName=payload
     }
+
 }
 const actions = {
     //详情数据的请求
@@ -24,8 +32,12 @@ const actions = {
         let res = await getImageList(payload)
         if (res.data.code === 1) {
             commit('upDateList', res.data.data)
+            commit('headLoading', false)
+          
         }
-    }
+    },
+   
+ 
 }
 export default {
     namespaced: true,

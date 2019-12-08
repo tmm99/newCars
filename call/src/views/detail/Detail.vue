@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-05 18:58:06
+ * @LastEditTime: 2019-12-07 09:58:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -236,7 +236,7 @@ export default {
 .all {
   color: #00afff;
 }
-
+ 
 .ul {
   height: auto;
   background: #fff;
@@ -270,7 +270,7 @@ export default {
   padding-left: 10px;
 }
 
-.p {
+.list .p {
   padding: 0 0.2rem;
   height: 0.5rem;
   line-height: 0.5rem;

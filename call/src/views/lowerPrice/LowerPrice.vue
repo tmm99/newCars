@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-05 11:28:38
- * @LastEditTime: 2019-12-05 20:52:15
+ * @LastEditTime: 2019-12-09 00:21:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\views\lowerPrice\LowerPrice.vue
@@ -33,7 +33,7 @@
                     </li>
                     <li>
                          <span>城市</span>
-                         <span>北京</span>
+                         <span @click="city">北京</span>
                     </li>
                 </ul>
                 <div></div>
@@ -44,7 +44,61 @@
             </div>
 
         </div>
-        <div class="footer"></div>
+        <div class="footer">
+            <p class="tip">选择报价经销商</p>
+            <ul>
+                <li>
+                    <p>
+                        <span>北京澳际</span>
+                        <span>万</span>
+                    </p>
+                    <p>
+                        <span>北京市</span>
+                        <span>售多是</span>
+                    </p>
+                </li>
+                 <li>
+                    <p>
+                        <span>北京澳际</span>
+                        <span>万</span>
+                    </p>
+                    <p>
+                        <span>北京市</span>
+                        <span>售多是</span>
+                    </p>
+                </li>
+                 <li>
+                    <p>
+                        <span>北京澳际</span>
+                        <span>万</span>
+                    </p>
+                    <p>
+                        <span>北京市</span>
+                        <span>售多是</span>
+                    </p>
+                </li>
+                 <li>
+                    <p>
+                        <span>北京澳际</span>
+                        <span>万</span>
+                    </p>
+                    <p>
+                        <span>北京市</span>
+                        <span>售多是</span>
+                    </p>
+                </li>
+                 <li>
+                    <p>
+                        <span>北京澳际</span>
+                        <span>万</span>
+                    </p>
+                    <p>
+                        <span>北京市</span>
+                        <span>售多是</span>
+                    </p>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -76,6 +130,10 @@ export default {
             ...mapMutations({
                 UpCurrent: "detail/UpCurrent"
             }),
+            //城市跳转
+            city(){
+                this.$router.push('/cityName')
+            }
     },
     created(){
          this.getInfoAndListById(this.$route.query.SerialID);
@@ -91,7 +149,7 @@ export default {
 <style scoped lang="scss">
     .lowPrice{
         width: 100%;
-        height: 100%;
+        height: auto;
         
         header{
             height: .6rem;
@@ -198,6 +256,58 @@ export default {
                     outline: none;
                     -webkit-appearance: none;
                     border: none;
+            }
+        }
+
+        .footer{
+            width:100%;
+            height:auto;
+            display: flex;
+            flex-direction: column;
+            .tip{
+                width:100%;
+                height:.6rem;
+                background:#eee;
+                font-size:.24rem;
+                color:#666;
+                line-height:.6rem;
+                padding:0 .2rem;
+            }
+            ul {
+                background: #fff;
+                padding: 0 .10rem;
+                display: block;
+                list-style-type: disc;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                padding-inline-start: 32px;
+                list-style: none;
+                flex: 1;
+                    li{
+                        position: relative;
+                        padding: .26rem 0 .26rem .20rem;
+                        border-bottom: 1px solid #eee;
+                        box-sizing: border-box;
+                        height: 1.65rem;
+                        p{
+                            display: flex;
+                            justify-content: space-between;
+                            padding-top: .2rem;
+                        }
+                         p:first-child{
+                            font-size: .3rem;
+                        }
+                         p:first-child span:last-child{
+                            color:red;
+                        }
+
+                          p:nth-child(2){
+                            font-size: .24rem;
+                            color: #a2a2a2;
+                        }
+                    }
             }
         }
     }
