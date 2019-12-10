@@ -1,8 +1,8 @@
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-03 18:56:04
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-09 19:03:01
  * @Description: 
  -->
 <template>
@@ -25,6 +25,6 @@ body {
 #app{
   width: 100%;
   height: 100%;
-  overflow: hidden;
+ 
 }
 </style>

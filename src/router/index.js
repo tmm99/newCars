@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-09 10:50:18
+ * @LastEditTime: 2019-12-10 15:38:25
  * @Description: 
  */
 import Vue from 'vue'
@@ -27,10 +27,11 @@ const routes = [
     component:()=>import("../views/pic.vue")
   },
   {
-    path:"/lowerPrice",
-    name:"low",
-    component:()=>import("../views/low.vue")
-  }
+    path:"/lowPrice",
+    name:"lowPrice",
+    component:()=>import("../views/lowerPrice/LowerPrice.vue")
+  },
+ 
 ]
 
 const router = new VueRouter({
