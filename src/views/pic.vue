@@ -8,58 +8,74 @@ import { mapActions, mapState } from 'vuex';
  -->
 <template>
   <div class="pic">
-    <div class="title">
-      <p @click="to">
-        <span>{{name}}</span>
-        <span class="iconfont">&#xe69b;</span>
-      </p>
-      <p @click="toCar">
-        <span>{{car}}</span>
-        <span class="iconfont">&#xe69b;</span>
-      </p>
-    </div>
-    <div class="main">
-      <div class="img" :v-if="list.length" v-for="(item,index) in list" :key="index">
-        <div>
-          <div
-            v-for="(item1,index1) in item.List"
-            :key="index1"
-            :style="{
-            background:'url('+item1.Url+')',
-            backgroundSize:'cover',  
-            backgroundRepeat:'no-repeat',
-            backgroundPosition:'center'}"
-            class="imgS"
-          >
-            <div v-if="index1==0">
-              <span>{{item.Name}}</span>
-              <span>{{item.Count}}></span>
+    <!-- 图片分类 -->
+    <div class="classify">
+        <div class="title">
+          <p @click="to">
+            <span>{{name}}</span>
+            <span class="iconfont">&#xe69b;</span>
+          </p>
+          <p @click="toCar">
+            <span>{{car}}</span>
+            <span class="iconfont">&#xe69b;</span>
+          </p>
+        </div>
+      <div class="main">
+        <div class="img" :v-if="list.length" v-for="(item,index) in list" :key="index">
+          <div>
+            <div
+              v-for="(item1,index1) in item.List"
+              :key="index1"
+              :style="{
+              background:'url('+item1.Url+')',
+              backgroundSize:'cover',  
+              backgroundRepeat:'no-repeat',
+              backgroundPosition:'center'}"
+              class="imgS"
+            >
+              <div v-if="index1==0" @click="clickImageID(item.Id)">
+                <span>{{item.Name}}</span>
+                <span>{{item.Count}}></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- 图片列表 -->
+    <ImageTypeList v-if="showImageList"/>
+
+    <!-- 颜色选择 -->
     <transition name="scroll-top">
       <div v-show="judgeC" class="colour">
         <Hue :judgeC.sync="judgeC" :name.sync="name"></Hue>
       </div>
     </transition>
+
+    <!-- 车款选择 -->
     <transition name="scroll-top">
       <div v-show="tie" class="car">
         <Tie :tie.sync="tie" :car.sync="car"></Tie>
       </div>
     </transition>
+
+    <!-- 图片轮播展示 -->
+    
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 //引入颜色组件
 import Hue from "./hue";
 //引入车款组件
 import Tie from "./tie";
+//引入分类列表组件
+import ImageTypeList from '@/components/ImageTypeList.vue';
+
 import Imgs from "@/components/img.vue";
 export default {
-  components: { Imgs, Hue, Tie },
+  components: { Imgs, Hue, Tie, ImageTypeList },
   data() {
     return {
       // 控制颜色组件
@@ -67,7 +83,8 @@ export default {
       name: "颜色",
       //控制车系组件
       tie: false,
-      car: "车款"
+      car: "车款",
+      showImageList: false
     };
   },
   watch: {
@@ -91,6 +108,10 @@ export default {
     ...mapActions({
       getImageList: "pic/getImageList"
     }),
+    ...mapMutations({
+      setImageID: 'pic/setImageId',
+      setSerialID: 'pic/setSerialId'
+    }),
     //跳到颜色页面
     to() {
       // this.$router.push(`/hue?SerialID=${this.$route.query.id}`);
@@ -100,9 +121,15 @@ export default {
     toCar() {
       // this.$router.push(`/tie?id=${this.$route.query.id}`);
       this.tie = true;
+    },
+    // 点击分类进入分类列表
+    clickImageID(id){
+      this.setImageID(id);
+      this.showImageList = true;
     }
   },
   created() {
+    this.setSerialID(this.$route.query.id);
     this.getImageList(this.$route.query.id);
   }
 };
