@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-09 19:55:29
+ * @LastEditTime: 2019-12-10 15:40:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -185,13 +185,14 @@ export default {
 }
 
 .info {
-  height: 30px;
+  height: 50px;
   padding: 15px 10px 5px;
   position: relative;
   background: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  // line-height: 50px;
   div {
     flex: 1;
     height: 100%;
@@ -199,6 +200,7 @@ export default {
       font-size: 0.36rem;
       color: red;
       font-weight: 500;
+      
     }
     p:last-child {
       padding-top: 0.1rem;
@@ -207,7 +209,7 @@ export default {
     }
   }
   .row {
-    display: flex;
+    // display: flex;
     color: #fff;
     flex: 1;
     height: 100%;

@@ -1,15 +1,17 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-09 14:26:15
- * @LastEditTime: 2019-12-09 18:34:09
+ * @LastEditTime: 2019-12-10 20:53:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\src\views\province\province.vue
  -->
 <template>
     <div class="province">
+        <!-- 左边组件 -->
        <div class="left" @click="citySonCom">left</div>
-        <div class="right" >right</div>
+        <!-- 右边组件 -->
+       <div class="right" >right</div>
     </div> 
 </template>
 <script>
@@ -26,24 +28,24 @@ export default {
     },
     computed:{
         ...mapState({
-            
+            getCityData:state=>state.CityDatas.getCityData
         })
     },
     methods:{
         //此子组件
         citySonCom(){
             this.cityCom()
-            
         },
 
         ...mapActions({
-
+            getCityDatas:'CityDatas/getCityDatas'
         })
     },
     created(){
+        this.getCityDatas()
     },
     mounted(){
-
+        console.log(this.getCityData.CityID)
     }
 }
 </script>

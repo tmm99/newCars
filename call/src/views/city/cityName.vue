@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-09 00:06:44
- * @LastEditTime: 2019-12-09 19:38:24
+ * @LastEditTime: 2019-12-10 15:45:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\src\views\city\cityName.vue
@@ -9,7 +9,7 @@
 <template>
     <div class="cityBox">
                 <p @click="changeSon">自动定位</p>
-                <p>北京</p>
+                <p @click="changeSon">北京</p>
                 <p>省市</p>
                 <div v-for="(item,index) in cityList" :key="index" class="cont">
                     <div class="contList"  @click="showCity(item)">
@@ -74,6 +74,8 @@ export default {
      width: 100%;
      height: 100%;
      overflow: hidden;
+     overflow-y: auto;
+
  }
     .cityBox p:first-child{
         height: 20px;
@@ -120,12 +122,12 @@ export default {
            
     }
      .cityShow{
-                transition-delay: 1s;
+                transition-delay: 0s;
                 transition-duration: .5s;
                 transform: translateX(0%);
             }
     .cityHide{
-                transition-delay: 1s;
+                transition-delay: 0s;
                 transition-duration: .5s;
                 transform: translateX(100%);
             }        

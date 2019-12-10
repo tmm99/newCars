@@ -1,8 +1,8 @@
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 19:05:30
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-10 16:02:43
  * @Description: 
  -->
 <template>
@@ -144,21 +144,21 @@ export default {
   }
 }
 .box {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
-  width: 75%;
+  width: 72%;
   height: 100%;
   background: #fff;
   overflow-y: auto;
 }
 .shade {
-  transition-delay: 2s;
+  transition-delay: 0s;
   transition-duration: 1s;
   transform: translateX(100%);
 }
 .show {
-  transition-delay: 2s;
+  transition-delay: 0s;
   transition-duration: 2s;
   transition-timing-function: linear;
   transform: translateX(0%);

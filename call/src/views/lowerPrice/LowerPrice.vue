@@ -1,17 +1,19 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-05 11:28:38
- * @LastEditTime: 2019-12-09 21:05:04
+ * @LastEditTime: 2019-12-10 19:55:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\views\lowerPrice\LowerPrice.vue
  -->
 <template>
     <div class="lowPrice">
+        <!-- 头部信息 -->
         <header>
             <p>可向多个商家询问最低价,商家及时回复</p>
             <img src="">
         </header>
+        <!-- 汽车数据 -->
         <div class="content">
             <div class="top">
                 <img :src="detailData.Picture" class="img"/>
@@ -20,6 +22,7 @@
                     <p><span>{{detailData.list[0].market_attribute.year}}款</span><span class="twospan">{{detailData.list[0].car_name}}</span></p>
                 </div>
             </div>
+            <!-- 个人信息 -->
             <div class="middle">
                 <p class="tip">个人信息</p>
                 <ul>
@@ -37,35 +40,32 @@
                     </li>
                 </ul> 
                 <div></div>
-
             </div>
             <div class="bottom">
                 <button>询问最低价</button>
             </div>
-
         </div>
+
+        <!-- 经销商报价 -->
         <div class="footer">
             <p class="tip">选择报价经销商</p>
             <ul>
-                <li v-for="(item,index) in CityLists" :key="index">
+                <li v-for="(item,index) in CityLists" :key="index" :class="index==0||index==1||index==2?'active':''" @click="changeStyle">
                     <p>
                         <span>{{item.dealerShortName}}</span>
                         <span>万</span>
                     </p>
                     <p>
                         <span>{{item.address}}</span>
-                        <span>售多是</span>
+                        <span>售{{item.saleRange}}</span>
                     </p>
                 </li>
-               
-               
             </ul>
         </div>
-        <!-- 动画 -->
+        <!-- 组件动画 -->
         <div :class="[isShow?'show':'shade']" class="box">
               <CityName :changeCom="changeCom"></CityName>
         </div>
-      
     </div>
 </template>
 <script>
@@ -81,7 +81,8 @@ export default {
     data(){
         return {
             isShow:false,
-            cityId:201
+            cityId:201,
+            id:[],
         }
     },
     computed:{
@@ -92,7 +93,6 @@ export default {
             cityList:state=>state.cityName.cityList,
             //经商列表
             CityLists:state=>state.CityList.CityLists
-         
        })
     },
     methods:{
@@ -113,6 +113,18 @@ export default {
             //动画组件传值
             changeCom(){
                 this.isShow=false
+            },
+            //改变伪元素
+            changeStyle(event){
+                //点击切换
+               if( event.target.className){
+
+                   event.target.className=''
+               }else{
+                   event.target.className='active'
+
+               }
+       
             }
     },
     created(){
@@ -128,7 +140,6 @@ export default {
         // console.log(this.$route.query.lowerid)
         // console.log(this.detailData)
         // console.log(this.$route.query.carid,"carId 111111111111")
-        
         console.log(this.$store.state)
     }
 }
@@ -227,6 +238,8 @@ export default {
                     text-align: right;
                     box-sizing: border-box;
                 }
+              
+
         }
 
         .bottom{
@@ -268,12 +281,11 @@ export default {
                 margin-block-end: 1em;
                 margin-inline-start: 0px;
                 margin-inline-end: 0px;
-                padding-inline-start: 32px;
                 list-style: none;
                 flex: 1;
                     li{
                         position: relative;
-                        padding: .26rem 0 .26rem .20rem;
+                        padding: .26rem 0 .26rem .70rem;
                         border-bottom: 1px solid #eee;
                         box-sizing: border-box;
                         height: 1.65rem;
@@ -293,8 +305,34 @@ export default {
                             font-size: .24rem;
                             color: #a2a2a2;
                         }
+                        
+                          p:nth-child(2) span:first-child{
+                           display: inline-block;
+                           width: 80%;
+                        }
                     }
             }
+              ul>li.active::before{
+                    content: "\2713";
+                    background: #3aacff;
+                    border: none;
+                    color: #fff;
+                    text-align: center;
+                }
+                ul>li::before{
+                    content: "";
+                    display: inline-block;
+                    width: .32rem;
+                    height: .32rem;
+                    border-radius: 50%;
+                    border: 2px solid #ccc;  
+                    box-sizing: border-box;
+                    position: absolute;
+                    left: 0.1rem;
+                    top: 50%;
+                    -webkit-transform: translate3d(0,-50%,0);
+                    transform: translate3d(0,-50%,0);
+                }
         }
       
     .box{
@@ -310,13 +348,13 @@ export default {
     }
         
      .show{
-         transition-delay: 1s;
+         transition-delay: 0s;
          transition-duration: 3s;
          transform: translateY(0%);
          z-index: 999;
      }
       .shade{
-         transition-delay: 1s;
+         transition-delay: 0s;
          transition-duration: 3s;
         transform: translateY(100%);
      }
