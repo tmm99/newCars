@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 19:05:30
+ * @LastEditTime: 2019-12-10 16:04:17
  * @Description: 
  -->
 <template>
@@ -144,13 +144,14 @@ export default {
   }
 }
 .box {
-  position: absolute;
+  position:fixed;
   top: 0;
   right: 0;
   width: 75%;
   height: 100%;
   background: #fff;
-  overflow-y: auto;
+  overflow-y: scroll;
+  z-index: 999;
 }
 .shade {
   transition-delay: 2s;

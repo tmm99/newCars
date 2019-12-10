@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-05 11:36:29
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-06 10:22:53
+ * @LastEditTime: 2019-12-10 16:32:38
  * @Description: 
  -->
 <template>
@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import index, { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   props: ["judgeC","name"],
   components: {},
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getModelImageYearColor: "hue/getModelImageYearColor"
+      getModelImageYearColors: "hue/getModelImageYearColors"
     }),
     ...mapMutations({
       alterIdx: "pic/alterId"
@@ -59,13 +59,11 @@ export default {
       this.$emit("update:name",name)
       //让颜色组件消失
       this.$emit("update:judgeC",false)
-      // window.history.go(-1);
     }
   },
   created() {
-    this.getModelImageYearColor(this.$route.query.id);
-  },
-  mounted() {}
+    this.getModelImageYearColors(this.$route.query.id);
+  }
 };
 </script>
 <style scoped lang="scss">

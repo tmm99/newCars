@@ -3,23 +3,23 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-06 14:08:17
- * @Description: 
+ * @LastEditTime: 2019-12-10 19:48:46
+ * @Description:
  -->
 <template>
   <div class="pic">
     <!-- 图片分类 -->
     <div class="classify">
-        <div class="title">
-          <p @click="to">
-            <span>{{name}}</span>
-            <span class="iconfont">&#xe69b;</span>
-          </p>
-          <p @click="toCar">
-            <span>{{car}}</span>
-            <span class="iconfont">&#xe69b;</span>
-          </p>
-        </div>
+      <div class="title">
+        <p @click="to">
+          <span>{{name}}</span>
+          <span class="iconfont">&#xe69b;</span>
+        </p>
+        <p @click="toCar">
+          <span>{{car}}</span>
+          <span class="iconfont">&#xe69b;</span>
+        </p>
+      </div>
       <div class="main">
         <div class="img" :v-if="list.length" v-for="(item,index) in list" :key="index">
           <div>
@@ -28,7 +28,7 @@ import { mapActions, mapState } from 'vuex';
               :key="index1"
               :style="{
               background:'url('+item1.Url+')',
-              backgroundSize:'cover',  
+              backgroundSize:'cover',
               backgroundRepeat:'no-repeat',
               backgroundPosition:'center'}"
               class="imgS"
@@ -42,9 +42,6 @@ import { mapActions, mapState } from 'vuex';
         </div>
       </div>
     </div>
-
-    <!-- 图片列表 -->
-    <ImageTypeList v-if="showImageList"/>
 
     <!-- 颜色选择 -->
     <transition name="scroll-top">
@@ -60,8 +57,12 @@ import { mapActions, mapState } from 'vuex';
       </div>
     </transition>
 
+    <!-- 图片列表 -->
+    <Imgs v-if="imgShow"></Imgs>
     <!-- 图片轮播展示 -->
-    
+
+    <!-- 图片列表 -->
+    <!-- <ImageTypeList v-if="showImageList"/> -->
   </div>
 </template>
 <script>
@@ -71,11 +72,11 @@ import Hue from "./hue";
 //引入车款组件
 import Tie from "./tie";
 //引入分类列表组件
-import ImageTypeList from '@/components/ImageTypeList.vue';
+// import ImageTypeList from '@/components/ImageTypeList.vue';
 
 import Imgs from "@/components/img.vue";
 export default {
-  components: { Imgs, Hue, Tie, ImageTypeList },
+  components: { Imgs, Hue, Tie },
   data() {
     return {
       // 控制颜色组件
@@ -84,7 +85,8 @@ export default {
       //控制车系组件
       tie: false,
       car: "车款",
-      showImageList: false
+      imgShow:false
+      // showImageList: false 控制图片的显示与隐藏
     };
   },
   watch: {
@@ -109,8 +111,8 @@ export default {
       getImageList: "pic/getImageList"
     }),
     ...mapMutations({
-      setImageID: 'pic/setImageId',
-      setSerialID: 'pic/setSerialId'
+      setImageID: "pic/setImageId",
+      setSerialID: "pic/setSerialId"
     }),
     //跳到颜色页面
     to() {
@@ -123,9 +125,12 @@ export default {
       this.tie = true;
     },
     // 点击分类进入分类列表
-    clickImageID(id){
+    clickImageID(id) {
+      //让img组件显示
+      this.imgShow=true;
+      //给vux传入点击的id
       this.setImageID(id);
-      this.showImageList = true;
+      // this.showImageList = true;
     }
   },
   created() {
@@ -197,15 +202,14 @@ export default {
     }
   }
 }
-.imgS div{
+.imgS div {
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, 0.5);
 }
 .imgS span {
   color: #fff;
   font-size: 0.28rem;
-  
 }
 .colour,
 .car {

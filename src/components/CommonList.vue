@@ -1,5 +1,5 @@
 <template>
-    <!-- 
+  <!-- 
         /**
         * list 下拉刷新 加载更多
         * @props {
@@ -14,91 +14,108 @@
         * }
         * slotName: 'item' 显示列表项
         */
-    -->
-    <div class="container">
-        <!-- <ul> -->
-            <!-- <li v-for="(item, index) in list.value" :key="index">
-                <slot :item="item"></slot>
-            </li> -->
-        <!-- </ul> -->
-
-        <slot :value="list.value"></slot>
-        <p class="top-tip">释放刷新...</p>   
+  -->
+  <div class="container">
+    <div>
+      <p class="top-tip">释放刷新...</p>
+      <slot :value="list.value"></slot>
+      <p class="top-bottom">上拉加载...</p>
     </div>
+    <!-- <ul> -->
+    <!-- <li v-for="(item, index) in list.value" :key="index">
+                <slot :item="item"></slot>
+    </li>-->
+    <!-- </ul> -->
+  </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll';
-import {mapActions} from 'vuex';
+import BScroll from "better-scroll";
+import { mapActions } from "vuex";
 
 export default {
-    props: {
-        list: {
-            type: Object,
-            default: ()=>{
-                return {}
-            }
-        }
+  props: {
+    list: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }
+  },
+  watch: {
+    "list.value": function() {
+      console.log("value改变了");
+      this.scroll.refresh();
+    }
+  },
+  methods: {
+    // ...mapActions({
+    //     refreshDispatch: this.list.refreshDispatch,
+    //     loadMoreDispatch: this.list.loadMoreDispatch
+    // }),
+    refreshDispatch(page) {
+      this.$store.dispatch(this.list.refreshDispatch, page);
     },
-    watch: {
-        'list.value': function(){
-            console.log('value改变了');
-            this.scroll.refresh();
-        }
-    },
-    methods: {
-        // ...mapActions({
-        //     refreshDispatch: this.list.refreshDispatch,
-        //     loadMoreDispatch: this.list.loadMoreDispatch
-        // }),
-        refreshDispatch(page){
-            this.$store.dispatch(this.list.refreshDispatch, page)
-        },
-        loadMoreDispatch(page){
-            this.$store.dispatch(this.list.loadMoreDispatch, page)
-        }
-    },
-    mounted() {
-        this.scroll = new BScroll('.container',{
-            scrollY: true,
-            click: true,
-            probeType: 1,
-            pullUpLoad: {
-                threshold: 50,
-                moreTxt: '加载更多',
-                noMoreTxt: '没有更多数据了'
-            },
-            pullDownRefresh: {
-              threshold: 50,
-              stop: 30
-            }
-        })
+    loadMoreDispatch(page) {
+      this.$store.dispatch(this.list.loadMoreDispatch, page);
+    }
+  },
+  mounted() {
+    this.scroll = new BScroll(".container", {
+      scrollY: true,
+      click: true,
+      probeType: 1,
+      pullUpLoad: {
+        threshold: 50,
+        moreTxt: "加载更多",
+        noMoreTxt: "没有更多数据了"
+      },
+      pullDownRefresh: {
+        threshold: 50,
+        stop: 30
+      }
+    });
 
-        this.scroll.on('pullingUp', async ()=>{
-            console.log('上拉状态')
-            console.log('this...', this);
-            await this.loadMoreDispatch(this.list.query.page+1);
-            this.scroll.finishPullUp();
-        })
-        this.scroll.on('pullingDown', async ()=>{
-            console.log('下拉状态')
-            await this.refreshDispatch(1);
-            this.scroll.finishPullDown();
-        })
-    },
-}
+    this.scroll.on("pullingUp", async () => {
+      console.log("上拉状态");
+      console.log("this...", this);
+      await this.loadMoreDispatch(this.list.query.page + 1);
+      this.scroll.finishPullUp();
+    });
+    this.scroll.on("pullingDown", async () => {
+      console.log("下拉状态");
+      await this.refreshDispatch(1);
+      this.scroll.finishPullDown();
+    });
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-    .container{
-        width: 100%;
-        height: 100%;
-        overflow-y: scroll;
-        position: relative;
-    }
-    .top-tip{
-        position: absolute;
-        top: -30px;
-        text-align: center;
-    }
+.container {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  position: relative;
+}
+.top-tip {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  top: -30px;
+  text-align: center;
+  background: skyblue;
+  color: #fff;
+}
+.top-bottom {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: skyblue;
+  color: #fff;
+  position: absolute;
+  bottom: -30px;
+}
 </style>

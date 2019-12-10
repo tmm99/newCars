@@ -2,24 +2,31 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-05 11:50:41
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-05 16:01:57
+ * @LastEditTime: 2019-12-10 16:32:11
  * @Description: 
  */
+
+//引入数据
 import { getModelImageYearColor } from "@/services/index";
 
 const state = {
     list: [],
     colorList:[]
 }
+
 const mutations = {
+    //更改list
     Uplist(state,payload){
         state.list=payload.arr;
         state.colorList=payload.brr;
     }
 }
+
 const actions = {
-    async getModelImageYearColor({ commit }, payload) {
+    async getModelImageYearColors({ commit }, payload) {
+        //获取数据
         let src = await getModelImageYearColor(payload)
+        //判断
         if (src.data.code === 1) {
             let arr = [];
             let brr=[];
@@ -34,8 +41,6 @@ const actions = {
             }
             commit("Uplist",{arr,brr})
         }
-
-
     }
 }
 

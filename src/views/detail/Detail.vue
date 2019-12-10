@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-10 15:36:08
+ * @LastEditTime: 2019-12-10 19:28:47
  * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -10,8 +10,8 @@
   <div class="car">
     <div class="cont">
       <!-- 图片部分 -->
-      <div class="img">
-        <img :src="this.detailData.CoverPhoto" @click="goPic(detailData.SerialID)" />
+      <div class="img" @click="goPic(detailData.SerialID)">
+        <img :src="this.detailData.CoverPhoto" />
         <span data-hover="hover">{{this.detailData.pic_group_count}}张照片</span>
       </div>
       <!-- 询问低价 -->
@@ -99,7 +99,8 @@ export default {
     },
     //顶部图片路由
     goPic(newId) {
-      this.$router.push({ path: "/img", query: { id: newId } });
+      console.log(newId)
+      this.$router.push({ path: "/pic", query: { id: newId } });
     },
     everyLower() {
       this.$router.push("/lowPrice");
@@ -122,10 +123,6 @@ export default {
   },
   created() {
     this.getInfoAndListById(this.$route.query.SerialID);
-  // console.log(this.$route.query.itemName)
-    console.log(this.list);
-    // this.carName=this.$route.query.itemName
-    console.log(this.detailData)
   }
 };
 </script>
