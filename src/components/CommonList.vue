@@ -42,12 +42,6 @@ export default {
       }
     }
   },
-  // watch: {
-  //   "list.value": function() {
-  //     // console.log("value改变了");
-
-  //   }
-  // },
   methods: {
     // ...mapActions({
     //     refreshDispatch: this.list.refreshDispatch,
@@ -66,18 +60,21 @@ export default {
       scrollY: true,
       click: true,
       pullUpLoad: {
-        threshold: -30
+        threshold: -180
       },
       pullDownRefresh: {
         threshold: 50,
         stop: 30
       }
     });
+    //触发上拉事件，在里面做一些重新请求数据
     this.scroll.on("pullingUp", () => {
       console.log("上拉状态", 1111);
-        this.loadMoreDispatch(this.list.query.page + 1);
-
+      //调用数据接口
+      this.loadMoreDispatch(this.list.query.page + 1);
+      //在数据添加完成之后，告诉this.scroll 数据加载完成了，否则不会再次触发 pullingUp事件 没有此事件 会多次触发
       this.scroll.finishPullUp(() => {
+        //重新计算高度值
         this.scroll.refresh();
       });
     });
@@ -86,14 +83,6 @@ export default {
       await this.refreshDispatch(1);
       this.scroll.finishPullDown();
     });
-    // this.scroll.on("scrollEnd", () => {
-    //   console.log("scrollEnd");
-    // });
-    // this.scroll.on("touchEnd", () => {
-    //   console.log("手指松开了");
-    //   this.loadMoreDispatch(this.list.query.page + 1);
-    //   this.scroll.refresh();
-    // });
   }
 };
 </script>
@@ -117,6 +106,8 @@ export default {
   color: #fff;
 }
 .load::after {
+  position: absolute;
+  bottom: -30px;
   display: inline-block;
   content: "上拉加载...";
   width: 100%;
