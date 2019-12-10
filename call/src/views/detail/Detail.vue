@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-07 09:58:19
+ * @LastEditTime: 2019-12-09 19:55:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -23,7 +23,7 @@
           >指导价 {{this.detailData.market_attribute.official_refer_price}}</p>
         </div>
         <div class="row">
-          <button @click="lowerPrice(detailData.SerialID)">询问低价</button>
+          <button @click="lowerPrice(detailData.SerialID,detailData.list[0].car_id)">询问低价</button>
         </div>
       </div>
       <!-- 相关信息 -->
@@ -57,7 +57,7 @@
               <span>{{item1.market_attribute.dealer_price_max}}</span>
               <span class="twospan">{{item1.market_attribute.dealer_price_min}}起</span>
             </p>
-            <p class="price" @click="everyLower">询问底价</p>
+            <p class="price"  @click="lowerPrice(detailData.SerialID,detailData.list[0].car_id)">询问底价</p>
           </li>
         </ul>
       </div>
@@ -91,9 +91,10 @@ export default {
   },
   methods: {
     //底价路由
-    lowerPrice(lowerId) {
-      console.log(lowerId);
-      this.$router.push({ path: "/lowPrice", query: { lowerid: lowerId} });
+    lowerPrice(lowerId,carid) {
+      console.log(lowerId,carid);
+      // console.log(this.detailData.list[0].car_id)
+      this.$router.push({ path: "/lowPrice", query: { lowerid: lowerId,carid:carid} });
     },
     //顶部图片路由
     goPic(newId) {
@@ -124,7 +125,7 @@ export default {
   // console.log(this.$route.query.itemName)
     console.log(this.list);
     // this.carName=this.$route.query.itemName
-    // console.log(this.carName)
+    console.log(this.detailData)
   }
 };
 </script>

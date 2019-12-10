@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-09 00:14:17
+ * @LastEditTime: 2019-12-09 15:34:25
  * @Description: 
  */
 import Vue from 'vue'
@@ -17,12 +17,15 @@ import pic from "./modules/pic";
 import detail from "./modules/detail";
 //引入城市
 import cityName from './modules/cityName'
+//引入城市列表
+import CityList from './modules/cityList'
 export default new Vuex.Store({
   modules: {
     home,
     pic,
     detail,
-    cityName
+    cityName,
+    CityList
   },  
   plugins:[createLogger()]
 })

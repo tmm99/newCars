@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-05 11:28:38
- * @LastEditTime: 2019-12-09 00:21:16
+ * @LastEditTime: 2019-12-09 21:05:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\views\lowerPrice\LowerPrice.vue
@@ -35,7 +35,7 @@
                          <span>城市</span>
                          <span @click="city">北京</span>
                     </li>
-                </ul>
+                </ul> 
                 <div></div>
 
             </div>
@@ -47,110 +47,98 @@
         <div class="footer">
             <p class="tip">选择报价经销商</p>
             <ul>
-                <li>
+                <li v-for="(item,index) in CityLists" :key="index">
                     <p>
-                        <span>北京澳际</span>
+                        <span>{{item.dealerShortName}}</span>
                         <span>万</span>
                     </p>
                     <p>
-                        <span>北京市</span>
+                        <span>{{item.address}}</span>
                         <span>售多是</span>
                     </p>
                 </li>
-                 <li>
-                    <p>
-                        <span>北京澳际</span>
-                        <span>万</span>
-                    </p>
-                    <p>
-                        <span>北京市</span>
-                        <span>售多是</span>
-                    </p>
-                </li>
-                 <li>
-                    <p>
-                        <span>北京澳际</span>
-                        <span>万</span>
-                    </p>
-                    <p>
-                        <span>北京市</span>
-                        <span>售多是</span>
-                    </p>
-                </li>
-                 <li>
-                    <p>
-                        <span>北京澳际</span>
-                        <span>万</span>
-                    </p>
-                    <p>
-                        <span>北京市</span>
-                        <span>售多是</span>
-                    </p>
-                </li>
-                 <li>
-                    <p>
-                        <span>北京澳际</span>
-                        <span>万</span>
-                    </p>
-                    <p>
-                        <span>北京市</span>
-                        <span>售多是</span>
-                    </p>
-                </li>
+               
+               
             </ul>
         </div>
+        <!-- 动画 -->
+        <div :class="[isShow?'show':'shade']" class="box">
+              <CityName :changeCom="changeCom"></CityName>
+        </div>
+      
     </div>
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-
+import CityName from '../city/cityName'
 export default {
     props:{
 
     },
     components:{
-
+        CityName
     },
     data(){
         return {
-
+            isShow:false,
+            cityId:201
         }
     },
     computed:{
        ...mapState({
             carName:state=>state.detail.carName,
             detailData: state => state.detail.list,
+            // 城市ID
+            cityList:state=>state.cityName.cityList,
+            //经商列表
+            CityLists:state=>state.CityList.CityLists
+         
        })
     },
     methods:{
          //结构vuex方法
             ...mapActions({
-                 getInfoAndListById: "detail/getInfoAndListById"
+                 getInfoAndListById: "detail/getInfoAndListById",
+                 getCityListS:'CityList/getCityListS',
+                // 城市ID
+                // getcityList:"cityName/getcityList",
             }),
             ...mapMutations({
                 UpCurrent: "detail/UpCurrent"
             }),
             //城市跳转
             city(){
-                this.$router.push('/cityName')
+                this.isShow=true
+            },
+            //动画组件传值
+            changeCom(){
+                this.isShow=false
             }
     },
     created(){
-         this.getInfoAndListById(this.$route.query.SerialID);
+         this.getInfoAndListById(this.$route.query.SerialID,this.$route.query.carid);
+        //城市ID
+        // let cityName = this.$store.state.cityName
+        // console.log(cityName.cityList,"qqqqqqqqq")
+         console.log(this.$route.query.carid,"carId")
+         console.log(this.cityId,"1212122")
+        this.getCityListS({carId:this.$route.query.carid,cityId:this.cityId})
     },
     mounted(){
-        console.log(this.$route.query.lowerid)
-        console.log(this.detailData)
+        // console.log(this.$route.query.lowerid)
+        // console.log(this.detailData)
+        // console.log(this.$route.query.carid,"carId 111111111111")
         
-
+        console.log(this.$store.state)
     }
 }
 </script>
 <style scoped lang="scss">
     .lowPrice{
         width: 100%;
-        height: auto;
-        
+        height: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
         header{
             height: .6rem;
             width: 100%;
@@ -197,7 +185,7 @@ export default {
 
         .middle{
             width: 100%;
-            height: auto;
+            height: 100%;
             .tip {
                     padding: 0 .2rem;
                     height: .6rem;
@@ -261,11 +249,9 @@ export default {
 
         .footer{
             width:100%;
-            height:auto;
-            display: flex;
-            flex-direction: column;
+            // height:100%;
+          
             .tip{
-                width:100%;
                 height:.6rem;
                 background:#eee;
                 font-size:.24rem;
@@ -310,5 +296,29 @@ export default {
                     }
             }
         }
+      
+    .box{
+           position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background:#fff;
+            overflow: hidden;
+            overflow-y: auto;
+            
+    }
+        
+     .show{
+         transition-delay: 1s;
+         transition-duration: 3s;
+         transform: translateY(0%);
+         z-index: 999;
+     }
+      .shade{
+         transition-delay: 1s;
+         transition-duration: 3s;
+        transform: translateY(100%);
+     }
     }
 </style>
