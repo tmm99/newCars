@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-03 20:15:43
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 20:04:51
+ * @LastEditTime: 2019-12-10 22:33:06
  * @Description: 
  -->
 <template>
@@ -51,7 +51,7 @@ export default {
   },
   created() {
     this.getImageTypeList();
-    console.log(this);
+    // console.log(this);
   }
 };
 </script>

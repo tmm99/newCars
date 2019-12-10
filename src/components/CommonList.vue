@@ -16,10 +16,10 @@
         */
   -->
   <div class="container">
-    <div>
-      <p class="top-tip">释放刷新...</p>
+    <div class="load">
+      <!-- <p class="top-tip">释放刷新...</p> -->
       <slot :value="list.value"></slot>
-      <p class="top-bottom">上拉加载...</p>
+      <!-- <p class="top-bottom"></p> -->
     </div>
     <!-- <ul> -->
     <!-- <li v-for="(item, index) in list.value" :key="index">
@@ -42,12 +42,12 @@ export default {
       }
     }
   },
-  watch: {
-    "list.value": function() {
-      console.log("value改变了");
-      this.scroll.refresh();
-    }
-  },
+  // watch: {
+  //   "list.value": function() {
+  //     // console.log("value改变了");
+
+  //   }
+  // },
   methods: {
     // ...mapActions({
     //     refreshDispatch: this.list.refreshDispatch,
@@ -62,31 +62,38 @@ export default {
   },
   mounted() {
     this.scroll = new BScroll(".container", {
+      scrollbar: true,
       scrollY: true,
       click: true,
-      probeType: 1,
       pullUpLoad: {
-        threshold: 50,
-        moreTxt: "加载更多",
-        noMoreTxt: "没有更多数据了"
+        threshold: -30
       },
       pullDownRefresh: {
         threshold: 50,
         stop: 30
       }
     });
+    this.scroll.on("pullingUp", () => {
+      console.log("上拉状态", 1111);
+        this.loadMoreDispatch(this.list.query.page + 1);
 
-    this.scroll.on("pullingUp", async () => {
-      console.log("上拉状态");
-      console.log("this...", this);
-      await this.loadMoreDispatch(this.list.query.page + 1);
-      this.scroll.finishPullUp();
+      this.scroll.finishPullUp(() => {
+        this.scroll.refresh();
+      });
     });
     this.scroll.on("pullingDown", async () => {
       console.log("下拉状态");
       await this.refreshDispatch(1);
       this.scroll.finishPullDown();
     });
+    // this.scroll.on("scrollEnd", () => {
+    //   console.log("scrollEnd");
+    // });
+    // this.scroll.on("touchEnd", () => {
+    //   console.log("手指松开了");
+    //   this.loadMoreDispatch(this.list.query.page + 1);
+    //   this.scroll.refresh();
+    // });
   }
 };
 </script>
@@ -95,9 +102,31 @@ export default {
 .container {
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
   position: relative;
 }
+.load::before {
+  position: absolute;
+  top: -30px;
+  display: inline-block;
+  content: "下拉刷新...";
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: skyblue;
+  color: #fff;
+}
+.load::after {
+  display: inline-block;
+  content: "上拉加载...";
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: skyblue;
+  color: #fff;
+}
+
 .top-tip {
   width: 100%;
   height: 30px;

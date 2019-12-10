@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-03 09:11:49
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 19:46:26
+ * @LastEditTime: 2019-12-10 22:16:11
  * @Description: 
  */
 
@@ -78,7 +78,7 @@ const actions = {
     
     // 图片分类列表的请求
     async getImageTypeList({commit, state}, payload){
-        console.log(11111)
+        console.log(payload,"++++")
         if (payload){
             commit('setPage', payload);
         }

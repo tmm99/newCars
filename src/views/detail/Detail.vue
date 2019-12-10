@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-10 19:28:47
+ * @LastEditTime: 2019-12-10 22:26:49
  * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -99,7 +99,7 @@ export default {
     },
     //顶部图片路由
     goPic(newId) {
-      console.log(newId)
+      // console.log(newId)
       this.$router.push({ path: "/pic", query: { id: newId } });
     },
     everyLower() {
