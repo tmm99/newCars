@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-05 11:36:29
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-05 23:20:01
+ * @LastEditTime: 2019-12-06 10:22:53
  * @Description: 
  -->
 <template>
@@ -18,7 +18,7 @@
         >{{item}}</p>
       </div>
       <ul class="selectionC">
-        <li v-for="(item,index) in colorList[indexs]" :key="index" @click="alterId(item.ColorId)">
+        <li v-for="(item,index) in colorList[indexs]" :key="index" @click="alterId(item.ColorId,item.Name)">
           <span :style="{background:item.Value}"></span>
           {{item.Name}}
         </li>
@@ -29,7 +29,7 @@
 <script>
 import index, { mapState, mapActions, mapMutations } from "vuex";
 export default {
-  props: ["judgeC"],
+  props: ["judgeC","name"],
   components: {},
   data() {
     return {
@@ -53,8 +53,10 @@ export default {
     alter(i) {
       this.indexs = i;
     },
-    alterId(i) {
+    alterId(i,name) {
+      console.log(name)
       this.alterIdx(i);
+      this.$emit("update:name",name)
       //让颜色组件消失
       this.$emit("update:judgeC",false)
       // window.history.go(-1);

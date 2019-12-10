@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-05 23:10:43
+ * @LastEditTime: 2019-12-09 10:50:18
  * @Description: 
  */
 import Vue from 'vue'
@@ -22,20 +22,15 @@ const routes = [
     component: () => import('../views/detail/Detail.vue')
   },
   {
-    path:"/lowerPrice",
+    path:"/img",
     name:"gopic",
     component:()=>import("../views/pic.vue")
   },
-  // {
-  //   path:"/hue",
-  //   name:"hue",
-  //   component:()=>import("../views/hue.vue")
-  // },
-  // {
-  //   path:"/tie",
-  //   name:'tie',
-  //   component : () =>import("../views/tie")
-  // }
+  {
+    path:"/lowerPrice",
+    name:"low",
+    component:()=>import("../views/low.vue")
+  }
 ]
 
 const router = new VueRouter({

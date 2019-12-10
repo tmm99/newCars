@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-05 12:00:24
+ * @LastEditTime: 2019-12-09 18:22:05
  * @Description: 
  */
 import Vue from 'vue'
@@ -17,12 +17,18 @@ import pic from "./modules/pic";
 import detail from "./modules/detail";
 //引入颜色
 import hue from "./modules/hue";
+//引入低价数据
+import low from "./modules/low";
+//城市数据
+import city from "./modules/city";
 export default new Vuex.Store({
   modules: {
     home,
     pic,
     detail,
-    hue
+    hue,
+    low,
+    city
   },  
   plugins:[createLogger()]
 })

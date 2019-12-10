@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 17:05:07
+ * @LastEditTime: 2019-12-09 14:10:28
  * @Description: 
  -->
 <template>
@@ -34,6 +34,7 @@ export default {
       this.backs();
     },
     to(i,item) {
+      localStorage.setItem("car",JSON.stringify({id:item.SerialID,Name:item.AliasName,Picture:item.Picture}))
       this.$router.push({path:"/details",query:{SerialID:i}});
      
     }

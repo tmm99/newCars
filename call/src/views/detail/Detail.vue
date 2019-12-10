@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-05 23:08:16
+ * @LastEditTime: 2019-12-09 16:38:52
  * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -57,7 +57,7 @@
               <span>{{item1.market_attribute.dealer_price_max}}</span>
               <span class="twospan">{{item1.market_attribute.dealer_price_min}}起</span>
             </p>
-            <p class="price" @click="everyLower">询问底价</p>
+            <p class="price" @click="everyLower(item1)">询问底价</p>
           </li>
         </ul>
       </div>
@@ -92,15 +92,27 @@ export default {
   methods: {
     //底价路由
     lowerPrice(lowerId) {
-      console.log(lowerId);
+      localStorage.setItem(
+        "type",
+        JSON.stringify({
+          year: this.list[0].list[0].market_attribute.year,
+          car_name: this.list[0].list[0].car_name
+        })
+      );
       this.$router.push({ path: "/lowerPrice", query: { lowerid: lowerId } });
     },
     //顶部图片路由
     goPic(newId) {
-      console.log(newId);
-      this.$router.push({ path: "/lowerPrice", query: { id: newId } });
+      this.$router.push({ path: "/img", query: { id: newId } });
     },
-    everyLower() {
+    everyLower(item) {
+      localStorage.setItem(
+        "type",
+        JSON.stringify({
+          year: item.year,
+          car_name: item.car_name
+        })
+      );
       this.$router.push("/lowerPrice");
     },
     //结构vuex方法

@@ -3,25 +3,25 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-05 23:38:40
+ * @LastEditTime: 2019-12-06 14:08:17
  * @Description: 
  -->
 <template>
   <div class="pic">
     <div class="title">
       <p @click="to">
-        <span>颜色</span>
+        <span>{{name}}</span>
         <span class="iconfont">&#xe69b;</span>
       </p>
       <p @click="toCar">
-        <span>车款</span>
+        <span>{{car}}</span>
         <span class="iconfont">&#xe69b;</span>
       </p>
     </div>
     <div class="main">
       <div class="img" :v-if="list.length" v-for="(item,index) in list" :key="index">
         <div>
-          <p
+          <div
             v-for="(item1,index1) in item.List"
             :key="index1"
             :style="{
@@ -31,20 +31,22 @@ import { mapActions, mapState } from 'vuex';
             backgroundPosition:'center'}"
             class="imgS"
           >
-            <span v-if="index1==0">{{item.Name}}</span>
-            <span v-if="index1==0">{{item.Count}}></span>
-          </p>
+            <div v-if="index1==0">
+              <span>{{item.Name}}</span>
+              <span>{{item.Count}}></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <transition name="scroll-top">
       <div v-show="judgeC" class="colour">
-        <Hue :judgeC.sync="judgeC"></Hue>
+        <Hue :judgeC.sync="judgeC" :name.sync="name"></Hue>
       </div>
     </transition>
     <transition name="scroll-top">
       <div v-show="tie" class="car">
-        <Tie :tie.sync="tie"></Tie>
+        <Tie :tie.sync="tie" :car.sync="car"></Tie>
       </div>
     </transition>
   </div>
@@ -62,17 +64,19 @@ export default {
     return {
       // 控制颜色组件
       judgeC: false,
+      name: "颜色",
       //控制车系组件
-      tie: false
+      tie: false,
+      car: "车款"
     };
   },
   watch: {
     //监听judgeC 的变化
-    judgeC() {
+    judgeC(a, b) {
       //重新渲染页面
       this.getImageList(this.$route.query.id);
     },
-     //监听tie 的变化
+    //监听tie 的变化
     tie() {
       //重新渲染页面
       this.getImageList(this.$route.query.id);
@@ -100,8 +104,7 @@ export default {
   },
   created() {
     this.getImageList(this.$route.query.id);
-  },
-  mounted() {}
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -156,7 +159,7 @@ export default {
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    p {
+    div {
       width: 2.46rem;
       height: 2.46rem;
       margin: 0.02rem;
@@ -167,9 +170,15 @@ export default {
     }
   }
 }
+.imgS div{
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
 .imgS span {
   color: #fff;
   font-size: 0.28rem;
+  
 }
 .colour,
 .car {

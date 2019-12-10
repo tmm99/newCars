@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-05 19:02:24
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-05 23:36:23
+ * @LastEditTime: 2019-12-06 13:43:48
  * @Description: 
  -->
 <template>
@@ -21,7 +21,7 @@
         <div v-for="(item,index) in list" :key="index" class="list">
           <p class="p">{{item.key}}</p>
           <ul class="ul">
-            <li v-for="(item1,index1) in item.list" :key="index1" @click="CarId(item.car_id)">
+            <li v-for="(item1,index1) in item.list" :key="index1" @click="CarId(item.car_id,item1.market_attribute.year,item1.car_name)">
               <p>
                 <span v-if="item1.market_attribute">{{item1.market_attribute.year}}款</span>
                 <span>{{item1.car_name}}</span>
@@ -46,34 +46,41 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
-    props:["tie"],
+    //接受组件传参
+    props:["tie","car"],
   data() {
     return {
       name: "全部"
     };
   },
   computed: {
+       //挂载 vux方法
     ...mapState({
       list: state => state.detail.Slist,
       year: state => state.detail.year
     })
   },
   methods: {
+      //挂载 vux方法
     ...mapActions({
       getInfoAndListById: "detail/getInfoAndListById"
     }),
+     //挂载 vux方法
     ...mapMutations({
       UpCurrent: "detail/UpCurrent",
       CarIdx:"pic/alterId"
     }),
+    //type 切换
     cut(i) {
       this.name = i;
       this.UpCurrent(i);
       this.getInfoAndListById(this.$route.query.id);
     },
-    CarId(i){
-        console.log(111)
+    //改变数据的
+    CarId(i,car,name){
         this.CarIdx(i);
+        let str=car+name;
+        this.$emit("update:car",str)
         this.$emit("update:tie",false)
         // window.history.go(-1)
     }
