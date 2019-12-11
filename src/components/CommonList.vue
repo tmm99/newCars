@@ -68,19 +68,21 @@ export default {
       }
     });
     //触发上拉事件，在里面做一些重新请求数据
-    this.scroll.on("pullingUp", () => {
-      console.log("上拉状态", 1111);
+    this.scroll.on("pullingUp", async () => {
       //调用数据接口
-      this.loadMoreDispatch(this.list.query.page + 1);
+      setTimeout(() => {
+        this.loadMoreDispatch(this.list.query.page + 1);
+      }, 1000);
       //在数据添加完成之后，告诉this.scroll 数据加载完成了，否则不会再次触发 pullingUp事件 没有此事件 会多次触发
-      this.scroll.finishPullUp(() => {
+      await this.scroll.finishPullUp(() => {
         //重新计算高度值
         this.scroll.refresh();
       });
     });
     this.scroll.on("pullingDown", async () => {
-      console.log("下拉状态");
-      await this.refreshDispatch(1);
+      setTimeout(() => {
+       this.refreshDispatch(1); 
+      }, 1000);
       this.scroll.finishPullDown();
     });
   }

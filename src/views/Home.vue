@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 16:04:17
+ * @LastEditTime: 2019-12-11 21:14:46
  * @Description: 
  -->
 <template>
@@ -147,19 +147,19 @@ export default {
   position:fixed;
   top: 0;
   right: 0;
-  width: 75%;
+  width: 72%;
   height: 100%;
   background: #fff;
   overflow-y: scroll;
   z-index: 999;
 }
 .shade {
-  transition-delay: 2s;
+  transition-delay: 0s;
   transition-duration: 1s;
   transform: translateX(100%);
 }
 .show {
-  transition-delay: 2s;
+  transition-delay: 0s;
   transition-duration: 2s;
   transition-timing-function: linear;
   transform: translateX(0%);

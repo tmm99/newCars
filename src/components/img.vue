@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-03 20:15:43
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 22:33:06
+ * @LastEditTime: 2019-12-11 20:04:49
  * @Description: 
  -->
 <template>
@@ -23,6 +23,7 @@
             :key="index"
             v-for="(item, index) in slotProps.value"
             :style="{backgroundImage: 'url('+item.Url.replace('{0}', item.LowSize)+')'}"
+            @click="showSwiper(index)"
           />
         </ul>
       </template>
@@ -33,6 +34,7 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import CommonList from "./CommonList";
 export default {
+  props:["wheelShow"],
   components: {
     CommonList
   },
@@ -47,11 +49,17 @@ export default {
   methods: {
     ...mapActions({
       getImageTypeList: "pic/getImageTypeList"
-    })
+    }),
+    ...mapMutations({
+      upCurrent:"pic/upCurrent"
+    }),
+    showSwiper(index){
+      this.upCurrent(index)
+      this.$emit("update:wheelShow",true)
+    }
   },
   created() {
     this.getImageTypeList();
-    // console.log(this);
   }
 };
 </script>

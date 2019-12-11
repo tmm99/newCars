@@ -1,17 +1,19 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-05 11:28:38
- * @LastEditTime: 2019-12-09 21:05:04
+ * @LastEditTime: 2019-12-11 20:08:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\views\lowerPrice\LowerPrice.vue
  -->
 <template>
     <div class="lowPrice">
+        <!-- 头部信息 -->
         <header>
             <p>可向多个商家询问最低价,商家及时回复</p>
             <img src="">
         </header>
+        <!-- 汽车数据 -->
         <div class="content">
             <div class="top">
                 <img :src="detailData.Picture" class="img"/>
@@ -20,52 +22,50 @@
                     <p><span>{{detailData.list[0].market_attribute.year}}款</span><span class="twospan">{{detailData.list[0].car_name}}</span></p>
                 </div>
             </div>
+            <!-- 个人信息 -->
             <div class="middle">
                 <p class="tip">个人信息</p>
                 <ul>
                     <li>
                         <span>姓名</span>
-                        <input placeholder="输入你的真实中文姓名"/>
+                        <input placeholder="输入你的真实中文姓名" type="text"/>
                     </li>
                     <li>
                          <span>手机</span>
-                        <input placeholder="输入你的真实手机号码"/>
+                        <input placeholder="输入你的真实手机号码" type="text"/>
                     </li>
                     <li>
                          <span>城市</span>
-                         <span @click="city">北京</span>
+                         <span @click="city">{{this.itm?'北京':this.littleCityData}}</span>
                     </li>
                 </ul> 
                 <div></div>
-
             </div>
             <div class="bottom">
                 <button>询问最低价</button>
             </div>
-
         </div>
+
+        <!-- 经销商报价 -->
         <div class="footer">
             <p class="tip">选择报价经销商</p>
             <ul>
-                <li v-for="(item,index) in CityLists" :key="index">
+                <li v-for="(item,index) in CityLists" :key="index" :class="index==0||index==1||index==2?'active':''" @click="changeStyle">
                     <p>
                         <span>{{item.dealerShortName}}</span>
                         <span>万</span>
                     </p>
                     <p>
                         <span>{{item.address}}</span>
-                        <span>售多是</span>
+                        <span>售{{item.saleRange}}</span>
                     </p>
                 </li>
-               
-               
             </ul>
         </div>
-        <!-- 动画 -->
+        <!-- 组件动画 -->
         <div :class="[isShow?'show':'shade']" class="box">
               <CityName :changeCom="changeCom"></CityName>
         </div>
-      
     </div>
 </template>
 <script>
@@ -81,7 +81,10 @@ export default {
     data(){
         return {
             isShow:false,
-            cityId:201
+            cityId:201,
+            id:[],
+            littleCityData:'', //接收从cityName传回的值
+            itm:true            //控制初期表单地址 与选择城市后的切换
         }
     },
     computed:{
@@ -92,7 +95,6 @@ export default {
             cityList:state=>state.cityName.cityList,
             //经商列表
             CityLists:state=>state.CityList.CityLists
-         
        })
     },
     methods:{
@@ -111,9 +113,25 @@ export default {
                 this.isShow=true
             },
             //动画组件传值
-            changeCom(){
-                this.isShow=false
-            }
+            changeCom(itemLittleName){  //接收从cityName传回的小城市数据
+                this.isShow=false       //子传父 点击cityName里的数据 关闭此处省份动画
+                // console.log(itemLittleName)
+                this.itm=false          //控制显示点击回来的小城市数据
+                this.littleCityData=itemLittleName  //声明一个变量接收传回来的城市数据
+            },
+            //改变伪元素
+            changeStyle(event){
+                //点击切换
+               if( event.target.className){
+
+                   event.target.className=''
+               }else{
+                   event.target.className='active'
+               }
+       
+            },
+            //表单
+           
     },
     created(){
          this.getInfoAndListById(this.$route.query.SerialID,this.$route.query.carid);
@@ -128,8 +146,9 @@ export default {
         // console.log(this.$route.query.lowerid)
         // console.log(this.detailData)
         // console.log(this.$route.query.carid,"carId 111111111111")
-        
-        console.log(this.$store.state)
+        // console.log(this.$store.state)
+
+
     }
 }
 </script>
@@ -227,6 +246,8 @@ export default {
                     text-align: right;
                     box-sizing: border-box;
                 }
+              
+
         }
 
         .bottom{
@@ -268,12 +289,11 @@ export default {
                 margin-block-end: 1em;
                 margin-inline-start: 0px;
                 margin-inline-end: 0px;
-                padding-inline-start: 32px;
                 list-style: none;
                 flex: 1;
                     li{
                         position: relative;
-                        padding: .26rem 0 .26rem .20rem;
+                        padding: .26rem 0 .26rem .70rem;
                         border-bottom: 1px solid #eee;
                         box-sizing: border-box;
                         height: 1.65rem;
@@ -293,8 +313,34 @@ export default {
                             font-size: .24rem;
                             color: #a2a2a2;
                         }
+                        
+                          p:nth-child(2) span:first-child{
+                           display: inline-block;
+                           width: 80%;
+                        }
                     }
             }
+              ul>li.active::before{
+                    content: "\2713";
+                    background: #3aacff;
+                    border: none;
+                    color: #fff;
+                    text-align: center;
+                }
+                ul>li::before{
+                    content: "";
+                    display: inline-block;
+                    width: .32rem;
+                    height: .32rem;
+                    border-radius: 50%;
+                    border: 2px solid #ccc;  
+                    box-sizing: border-box;
+                    position: absolute;
+                    left: 0.1rem;
+                    top: 50%;
+                    -webkit-transform: translate3d(0,-50%,0);
+                    transform: translate3d(0,-50%,0);
+                }
         }
       
     .box{
@@ -310,13 +356,13 @@ export default {
     }
         
      .show{
-         transition-delay: 1s;
+         transition-delay: 0s;
          transition-duration: 3s;
          transform: translateY(0%);
          z-index: 999;
      }
       .shade{
-         transition-delay: 1s;
+         transition-delay: 0s;
          transition-duration: 3s;
         transform: translateY(100%);
      }

@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-03 09:11:49
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 22:16:11
+ * @LastEditTime: 2019-12-11 20:05:29
  * @Description: 
  */
 
@@ -19,7 +19,8 @@ const state = {
     imageList: [], //分类图片列表
     count: '',  //当前分类图片总数
     page: 1,  //当前分页
-    pageSize: 30 //每页数量
+    pageSize: 30, //每页数量
+    current:0 //轮播开始的下标
 }
 const mutations = {
     // 设置serialId
@@ -41,6 +42,10 @@ const mutations = {
     // 修改图片分类id
     setImageId(state, payload){
         state.ImageID = payload;
+    },
+    //改变轮播下标
+    upCurrent(state,payload){
+        state.current=payload;
     },
     // 修改当前分类图片列表和总数
     setImageList(state, payload){
@@ -78,7 +83,6 @@ const actions = {
     
     // 图片分类列表的请求
     async getImageTypeList({commit, state}, payload){
-        console.log(payload,"++++")
         if (payload){
             commit('setPage', payload);
         }
@@ -89,7 +93,6 @@ const actions = {
             pageSize: state.pageSize
         }
         let res = await getImageTypeList(params);
-        console.log('res...', res);
         let {Count, List} = res.data.data;
         commit('setImageList', {Count, List});
     }

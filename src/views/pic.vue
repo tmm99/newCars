@@ -3,7 +3,7 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 19:48:46
+ * @LastEditTime: 2019-12-11 20:03:54
  * @Description:
  -->
 <template>
@@ -32,6 +32,7 @@ import { mapActions, mapState } from 'vuex';
               backgroundRepeat:'no-repeat',
               backgroundPosition:'center'}"
               class="imgS"
+              @click.self="showSwiper(item,index1)"
             >
               <div v-if="index1==0" @click="clickImageID(item.Id)">
                 <span>{{item.Name}}</span>
@@ -58,9 +59,9 @@ import { mapActions, mapState } from 'vuex';
     </transition>
 
     <!-- 图片列表 -->
-    <Imgs v-if="imgShow"></Imgs>
+    <Imgs v-if="imgShow" :wheelShow.sync="wheelShow"></Imgs>
     <!-- 图片轮播展示 -->
-
+    <Wheel v-if="wheelShow" :wheelShow.sync="wheelShow"></Wheel>
     <!-- 图片列表 -->
     <!-- <ImageTypeList v-if="showImageList"/> -->
   </div>
@@ -73,10 +74,11 @@ import Hue from "./hue";
 import Tie from "./tie";
 //引入分类列表组件
 // import ImageTypeList from '@/components/ImageTypeList.vue';
-
 import Imgs from "@/components/img.vue";
+//引入轮播组件
+import Wheel from "@/components/wheel.vue";
 export default {
-  components: { Imgs, Hue, Tie },
+  components: { Imgs, Hue, Tie, Wheel },
   data() {
     return {
       // 控制颜色组件
@@ -85,8 +87,9 @@ export default {
       //控制车系组件
       tie: false,
       car: "车款",
-      imgShow:false
+      imgShow: false,
       // showImageList: false 控制图片的显示与隐藏
+      wheelShow: false //控制录播组件的显示与隐藏
     };
   },
   watch: {
@@ -112,7 +115,8 @@ export default {
     }),
     ...mapMutations({
       setImageID: "pic/setImageId",
-      setSerialID: "pic/setSerialId"
+      setSerialID: "pic/setSerialId",
+      upCurrent: "pic/upCurrent"
     }),
     //跳到颜色页面
     to() {
@@ -127,10 +131,16 @@ export default {
     // 点击分类进入分类列表
     clickImageID(id) {
       //让img组件显示
-      this.imgShow=true;
+      this.imgShow = true;
       //给vux传入点击的id
       this.setImageID(id);
       // this.showImageList = true;
+    },
+    //点击进入轮播列表
+    showSwiper(item,index) {
+      this.upCurrent(index);
+      this.setImageID(item.Id);
+      this.wheelShow = true;
     }
   },
   created() {
