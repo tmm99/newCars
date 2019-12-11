@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-05 11:28:38
- * @LastEditTime: 2019-12-10 19:55:02
+ * @LastEditTime: 2019-12-11 20:08:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\views\lowerPrice\LowerPrice.vue
@@ -28,15 +28,15 @@
                 <ul>
                     <li>
                         <span>姓名</span>
-                        <input placeholder="输入你的真实中文姓名"/>
+                        <input placeholder="输入你的真实中文姓名" type="text"/>
                     </li>
                     <li>
                          <span>手机</span>
-                        <input placeholder="输入你的真实手机号码"/>
+                        <input placeholder="输入你的真实手机号码" type="text"/>
                     </li>
                     <li>
                          <span>城市</span>
-                         <span @click="city">北京</span>
+                         <span @click="city">{{this.itm?'北京':this.littleCityData}}</span>
                     </li>
                 </ul> 
                 <div></div>
@@ -83,6 +83,8 @@ export default {
             isShow:false,
             cityId:201,
             id:[],
+            littleCityData:'', //接收从cityName传回的值
+            itm:true            //控制初期表单地址 与选择城市后的切换
         }
     },
     computed:{
@@ -111,8 +113,11 @@ export default {
                 this.isShow=true
             },
             //动画组件传值
-            changeCom(){
-                this.isShow=false
+            changeCom(itemLittleName){  //接收从cityName传回的小城市数据
+                this.isShow=false       //子传父 点击cityName里的数据 关闭此处省份动画
+                // console.log(itemLittleName)
+                this.itm=false          //控制显示点击回来的小城市数据
+                this.littleCityData=itemLittleName  //声明一个变量接收传回来的城市数据
             },
             //改变伪元素
             changeStyle(event){
@@ -122,10 +127,11 @@ export default {
                    event.target.className=''
                }else{
                    event.target.className='active'
-
                }
        
-            }
+            },
+            //表单
+           
     },
     created(){
          this.getInfoAndListById(this.$route.query.SerialID,this.$route.query.carid);
@@ -140,7 +146,9 @@ export default {
         // console.log(this.$route.query.lowerid)
         // console.log(this.detailData)
         // console.log(this.$route.query.carid,"carId 111111111111")
-        console.log(this.$store.state)
+        // console.log(this.$store.state)
+
+
     }
 }
 </script>
