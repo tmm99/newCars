@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-03 09:11:49
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-11 20:05:29
+ * @LastEditTime: 2019-12-05 21:00:00
  * @Description: 
  */
 
@@ -17,10 +17,10 @@ const state = {
     SerialID: "", //车系id
     ImageID: "", //分类id
     imageList: [], //分类图片列表
+    current: 0,    // 轮播的当前图片
     count: '',  //当前分类图片总数
     page: 1,  //当前分页
-    pageSize: 30, //每页数量
-    current:0 //轮播开始的下标
+    pageSize: 30 //每页数量
 }
 const mutations = {
     // 设置serialId
@@ -43,13 +43,10 @@ const mutations = {
     setImageId(state, payload){
         state.ImageID = payload;
     },
-    //改变轮播下标
-    upCurrent(state,payload){
-        state.current=payload;
-    },
     // 修改当前分类图片列表和总数
     setImageList(state, payload){
         state.count = payload.Count;
+        payload.ImageID && (state.ImageID = payload.ImageID);
         // 实现上拉加载
         if (state.page == 1){
             state.imageList = payload.List;
@@ -60,6 +57,10 @@ const mutations = {
     // 修改当前分页
     setPage(state, payload){
         state.page = payload;
+    },
+    // 设置当前轮播的图片下标
+    setCurrent(state, payload){
+        state.current = payload;
     }
 }
 const actions = {
@@ -89,10 +90,11 @@ const actions = {
         let params = {
             SerialID: state.SerialID,
             ImageID: state.ImageID,
-            page: state.page,
-            pageSize: state.pageSize
+            Page: state.page,
+            PageSize: state.pageSize
         }
         let res = await getImageTypeList(params);
+        console.log('res...', res);
         let {Count, List} = res.data.data;
         commit('setImageList', {Count, List});
     }

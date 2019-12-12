@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-05 19:02:24
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 16:12:40
+ * @LastEditTime: 2019-12-06 13:43:48
  * @Description: 
  -->
 <template>
@@ -86,7 +86,7 @@ export default {
     }
   },
   created() {
-      // console.log(this.list)
+      console.log(this.list)
     this.getInfoAndListById(this.$route.query.id);
   }
 };

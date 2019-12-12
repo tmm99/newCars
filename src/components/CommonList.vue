@@ -1,5 +1,5 @@
 <template>
-  <!-- 
+    <!-- 
         /**
         * list 下拉刷新 加载更多
         * @props {
@@ -14,130 +14,112 @@
         * }
         * slotName: 'item' 显示列表项
         */
-  -->
-  <div class="container">
-    <div class="load">
-      <!-- <p class="top-tip">释放刷新...</p> -->
-      <slot :value="list.value"></slot>
-      <!-- <p class="top-bottom"></p> -->
+    -->
+    <div class="container">
+        <div>
+            <p class="top-tip">正在刷新中...</p>
+            
+            <slot :value="list.value"></slot>
+
+            <!-- 底部动画 -->
+            <div class="pullup-wrapper">
+                <div class="before-trigger" v-if="!isPullUpLoad">
+                    <span>上拉加载更多</span>
+                </div>
+                <div class="after-trigger" v-else>
+                    <span>正在加载中...</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- <ul> -->
-    <!-- <li v-for="(item, index) in list.value" :key="index">
-                <slot :item="item"></slot>
-    </li>-->
-    <!-- </ul> -->
-  </div>
 </template>
 
 <script>
-import BScroll from "better-scroll";
-import { mapActions } from "vuex";
+import BScroll from 'better-scroll';
+import {mapActions} from 'vuex';
 
 export default {
-  props: {
-    list: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    }
-  },
-  methods: {
-    // ...mapActions({
-    //     refreshDispatch: this.list.refreshDispatch,
-    //     loadMoreDispatch: this.list.loadMoreDispatch
-    // }),
-    refreshDispatch(page) {
-      this.$store.dispatch(this.list.refreshDispatch, page);
+    data(){
+        return {
+            isPullUpLoad: false
+        }
     },
-    loadMoreDispatch(page) {
-      this.$store.dispatch(this.list.loadMoreDispatch, page);
-    }
-  },
-  mounted() {
-    this.scroll = new BScroll(".container", {
-      scrollbar: true,
-      scrollY: true,
-      click: true,
-      pullUpLoad: {
-        threshold: -180
-      },
-      pullDownRefresh: {
-        threshold: 50,
-        stop: 30
-      }
-    });
-    //触发上拉事件，在里面做一些重新请求数据
-    this.scroll.on("pullingUp", async () => {
-      //调用数据接口
-      setTimeout(() => {
-        this.loadMoreDispatch(this.list.query.page + 1);
-      }, 1000);
-      //在数据添加完成之后，告诉this.scroll 数据加载完成了，否则不会再次触发 pullingUp事件 没有此事件 会多次触发
-      await this.scroll.finishPullUp(() => {
-        //重新计算高度值
-        this.scroll.refresh();
-      });
-    });
-    this.scroll.on("pullingDown", async () => {
-      setTimeout(() => {
-       this.refreshDispatch(1); 
-      }, 1000);
-      this.scroll.finishPullDown();
-    });
-  }
-};
+    props: {
+        list: {
+            type: Object,
+            default: ()=>{
+                return {}
+            }
+        }
+    },
+    watch: {
+        'list.value': function(newVal, oldVal){
+            if (newVal !== oldVal){
+                this.scroll.refresh();
+            }
+        }
+    },
+    methods: {
+        // ...mapActions({
+        //     refreshDispatch: this.list.refreshDispatch,
+        //     loadMoreDispatch: this.list.loadMoreDispatch
+        // }),
+        refreshDispatch(page){
+            this.$store.dispatch(this.list.refreshDispatch, page)
+        },
+        loadMoreDispatch(page){
+            this.$store.dispatch(this.list.loadMoreDispatch, page)
+        }
+    },
+    mounted() {
+        this.scroll = new BScroll('.container',{
+            scrollY: true,
+            click: true,
+            // probeType: 1,
+            pullUpLoad: {
+                threshold: 50
+            },
+            pullDownRefresh: {
+              threshold: 50,
+              stop: 30
+            }
+        })
+
+        this.scroll.on('pullingUp', async ()=>{
+            // 判断是否加载完全部数据
+            if (this.list.count == this.list.value.length){
+                return;
+            }
+
+            if (this.isPullUpLoad){
+                return;
+            }
+            this.isPullUpLoad = true;
+            await this.loadMoreDispatch(this.list.query.page+1);
+            this.scroll.finishPullUp();
+            this.isPullUpLoad = false;
+        })
+        this.scroll.on('pullingDown', async ()=>{
+            await this.refreshDispatch(1);
+            this.scroll.finishPullDown();
+        })
+    },
+}
 </script>
 
 <style lang="scss" scoped>
-.container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.load::before {
-  position: absolute;
-  top: -30px;
-  display: inline-block;
-  content: "下拉刷新...";
-  width: 100%;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  background: skyblue;
-  color: #fff;
-}
-.load::after {
-  position: absolute;
-  bottom: -30px;
-  display: inline-block;
-  content: "上拉加载...";
-  width: 100%;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  background: skyblue;
-  color: #fff;
-}
-
-.top-tip {
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  position: absolute;
-  top: -30px;
-  text-align: center;
-  background: skyblue;
-  color: #fff;
-}
-.top-bottom {
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  background: skyblue;
-  color: #fff;
-  position: absolute;
-  bottom: -30px;
-}
+    .container{
+        width: 100%;
+        height: 100%;
+        // overflow-y: scroll;
+        position: relative;
+    }
+    .top-tip{
+        position: absolute;
+        top: -30px;
+        text-align: center;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+    }
 </style>

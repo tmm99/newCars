@@ -2,14 +2,14 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-11 21:14:46
+ * @LastEditTime: 2019-12-04 19:05:30
  * @Description: 
  -->
 <template>
   <div class="home">
     <!-- loading 组件 -->
     <Loading v-show="loadingName"></Loading>
-    <div class="scroll" ref="roll">
+    <div class="scroll" ref="roll" v-stricky="letter">
       <div class="roll">
         <List v-for="(item,index) in list" :key="index" :data="item" ref="A" :ball="ball"></List>
       </div>
@@ -36,7 +36,8 @@ export default {
   components: { List, PopUp, Loading },
   data() {
     return {
-      isShow: false
+      isShow: false,
+      letter: ''
     };
   },
   computed: {
@@ -92,6 +93,8 @@ export default {
         if (e.touches[0].pageY > item && e.touches[0].pageY < item + 1) {
           let LH = this.$refs.A;
           let el = LH[index].$el;
+          // console.log('LH...', LH, LH[index])
+          // this.letter = LH[index];
           this.scroll.scrollToElement(el, 0, 0, 0);
         }
       });
@@ -120,6 +123,7 @@ export default {
 .scroll {
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
 }
 .roll {
   width: 100%;
@@ -144,22 +148,21 @@ export default {
   }
 }
 .box {
-  position:fixed;
+  position: absolute;
   top: 0;
   right: 0;
-  width: 72%;
+  width: 75%;
   height: 100%;
   background: #fff;
-  overflow-y: scroll;
-  z-index: 999;
+  overflow-y: auto;
 }
 .shade {
-  transition-delay: 0s;
+  transition-delay: 2s;
   transition-duration: 1s;
   transform: translateX(100%);
 }
 .show {
-  transition-delay: 0s;
+  transition-delay: 2s;
   transition-duration: 2s;
   transition-timing-function: linear;
   transform: translateX(0%);

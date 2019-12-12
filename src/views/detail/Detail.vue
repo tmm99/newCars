@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-10 22:26:49
+ * @LastEditTime: 2019-12-09 16:38:52
  * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -10,8 +10,8 @@
   <div class="car">
     <div class="cont">
       <!-- 图片部分 -->
-      <div class="img" @click="goPic(detailData.SerialID)">
-        <img :src="this.detailData.CoverPhoto" />
+      <div class="img">
+        <img :src="this.detailData.CoverPhoto" @click="goPic(detailData.SerialID)" />
         <span data-hover="hover">{{this.detailData.pic_group_count}}张照片</span>
       </div>
       <!-- 询问低价 -->
@@ -23,7 +23,7 @@
           >指导价 {{this.detailData.market_attribute.official_refer_price}}</p>
         </div>
         <div class="row">
-          <button @click="lowerPrice(detailData.SerialID,detailData.list[0].car_id)">询问低价</button>
+          <button @click="lowerPrice(detailData.SerialID)">询问低价</button>
         </div>
       </div>
       <!-- 相关信息 -->
@@ -57,12 +57,12 @@
               <span>{{item1.market_attribute.dealer_price_max}}</span>
               <span class="twospan">{{item1.market_attribute.dealer_price_min}}起</span>
             </p>
-            <p class="price"  @click="lowerPrice(detailData.SerialID,detailData.list[0].car_id)">询问底价</p>
+            <p class="price" @click="everyLower(item1)">询问底价</p>
           </li>
         </ul>
       </div>
     </div>
-    <div class="footer" @click="bottomPrice">
+    <div class="footer">
       <p>询问低价</p>
       <p>本地经销商为你报价</p>
     </div>
@@ -78,32 +78,42 @@ export default {
   data() {
     return {
       newId: "",
-      name: "全部",
-      // carName:''
+      //刚进页面的数据
+      name: "全部"
     };
   },
   computed: {
     ...mapState({
       detailData: state => state.detail.list,
       list: state => state.detail.Slist,
-      year: state => state.detail.year,
-      
+      year: state => state.detail.year
     })
   },
   methods: {
     //底价路由
-    lowerPrice(lowerId,carid) {
-      console.log(lowerId,carid);
-      // console.log(this.detailData.list[0].car_id)
-      this.$router.push({ path: "/lowPrice", query: { lowerid: lowerId,carid:carid} });
+    lowerPrice(lowerId) {
+      localStorage.setItem(
+        "type",
+        JSON.stringify({
+          year: this.list[0].list[0].market_attribute.year,
+          car_name: this.list[0].list[0].car_name
+        })
+      );
+      this.$router.push({ path: "/lowerPrice", query: { lowerid: lowerId } });
     },
     //顶部图片路由
     goPic(newId) {
-      // console.log(newId)
-      this.$router.push({ path: "/pic", query: { id: newId } });
+      this.$router.push({ path: "/img", query: { id: newId } });
     },
-    everyLower() {
-      this.$router.push("/lowPrice");
+    everyLower(item) {
+      localStorage.setItem(
+        "type",
+        JSON.stringify({
+          year: item.year,
+          car_name: item.car_name
+        })
+      );
+      this.$router.push("/lowerPrice");
     },
     //结构vuex方法
     ...mapActions({
@@ -116,9 +126,6 @@ export default {
       this.name = i;
       this.UpCurrent(i);
       this.getInfoAndListById(this.$route.query.SerialID);
-    },
-    bottomPrice(){
-       this.$router.push("/lowPrice");
     }
   },
   created() {
@@ -182,14 +189,13 @@ export default {
 }
 
 .info {
-  height: 50px;
+  height: 30px;
   padding: 15px 10px 5px;
   position: relative;
   background: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  // line-height: 50px;
+  justify-content: center;
   div {
     flex: 1;
     height: 100%;
@@ -197,7 +203,6 @@ export default {
       font-size: 0.36rem;
       color: red;
       font-weight: 500;
-      
     }
     p:last-child {
       padding-top: 0.1rem;
@@ -206,7 +211,7 @@ export default {
     }
   }
   .row {
-    // display: flex;
+    display: flex;
     color: #fff;
     flex: 1;
     height: 100%;
@@ -236,7 +241,7 @@ export default {
 .all {
   color: #00afff;
 }
- 
+
 .ul {
   height: auto;
   background: #fff;
@@ -270,7 +275,7 @@ export default {
   padding-left: 10px;
 }
 
-.list .p {
+.p {
   padding: 0 0.2rem;
   height: 0.5rem;
   line-height: 0.5rem;
@@ -288,27 +293,4 @@ export default {
   color: #00afff;
   font-size: 0.32rem;
 }
-
-.bottom {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    z-index: 99;
-    background: #3aacff;
-    height: 35px;
-    color: #fff;
-    /* line-height: 40px; */
-    text-align: center;
-    padding-top: 8px;
-}
-.bottom p:first-child{
-    font-size: 14px;
-    
-}
-.bottom p:nth-child(2){
-    font-size: 11px;
-    padding-top: 4px;
-
-}
-
 </style>

@@ -2,13 +2,12 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 19:28:08
+ * @LastEditTime: 2019-12-09 10:50:18
  * @Description: 
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import path from 'core-js';
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,14 +22,15 @@ const routes = [
     component: () => import('../views/detail/Detail.vue')
   },
   {
-    path: "/lowPrice",
-    name: "lowPrice",
-    component: () => import("../views/lowerPrice/LowerPrice.vue")
+    path:"/img",
+    name:"gopic",
+    component:()=>import("../views/pic.vue")
   },
-{
-  path:"/pic",
-  component :()=>import ("../views/pic.vue")
-}
+  {
+    path:"/lowerPrice",
+    name:"low",
+    component:()=>import("../views/low.vue")
+  }
 ]
 
 const router = new VueRouter({

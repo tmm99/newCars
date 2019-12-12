@@ -1,39 +1,35 @@
-import { mapActions, mapState } from 'vuex';
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-11 20:03:54
- * @Description:
+ * @LastEditTime: 2019-12-06 14:08:17
+ * @Description: 
  -->
 <template>
   <div class="pic">
     <!-- 图片分类 -->
     <div class="classify">
-      <div class="title">
-        <p @click="to">
-          <span>{{name}}</span>
-          <span class="iconfont">&#xe69b;</span>
-        </p>
-        <p @click="toCar">
-          <span>{{car}}</span>
-          <span class="iconfont">&#xe69b;</span>
-        </p>
-      </div>
+        <div class="title">
+          <p @click="to">
+            <span>{{name}}</span>
+            <span class="iconfont">&#xe69b;</span>
+          </p>
+          <p @click="toCar">
+            <span>{{car}}</span>
+            <span class="iconfont">&#xe69b;</span>
+          </p>
+        </div>
       <div class="main">
         <div class="img" :v-if="list.length" v-for="(item,index) in list" :key="index">
           <div>
             <div
+              @click.self="showSwiper(index1, item.Count, item.List, item.Id)"
               v-for="(item1,index1) in item.List"
               :key="index1"
-              :style="{
-              background:'url('+item1.Url+')',
-              backgroundSize:'cover',
-              backgroundRepeat:'no-repeat',
-              backgroundPosition:'center'}"
+              :data-bg="item1.Url"
               class="imgS"
-              @click.self="showSwiper(item,index1)"
             >
+            <!-- :style="{backgroundImage:'url('+item1.Url+')'}" -->
               <div v-if="index1==0" @click="clickImageID(item.Id)">
                 <span>{{item.Name}}</span>
                 <span>{{item.Count}}></span>
@@ -43,6 +39,9 @@ import { mapActions, mapState } from 'vuex';
         </div>
       </div>
     </div>
+
+    <!-- 图片列表 -->
+    <ImageTypeList v-if="showImageList" :showImageSwiper.sync="showImageSwiper"/>
 
     <!-- 颜色选择 -->
     <transition name="scroll-top">
@@ -58,12 +57,9 @@ import { mapActions, mapState } from 'vuex';
       </div>
     </transition>
 
-    <!-- 图片列表 -->
-    <Imgs v-if="imgShow" :wheelShow.sync="wheelShow"></Imgs>
     <!-- 图片轮播展示 -->
-    <Wheel v-if="wheelShow" :wheelShow.sync="wheelShow"></Wheel>
-    <!-- 图片列表 -->
-    <!-- <ImageTypeList v-if="showImageList"/> -->
+    <!-- <ImageSwiper v-if="showImageSwiper" :showImageSwiper.sync="showImageSwiper"></ImageSwiper> -->
+    <ImagePreview v-if="showImageSwiper" :showImageSwiper.sync="showImageSwiper"></ImagePreview>
   </div>
 </template>
 <script>
@@ -73,12 +69,17 @@ import Hue from "./hue";
 //引入车款组件
 import Tie from "./tie";
 //引入分类列表组件
-// import ImageTypeList from '@/components/ImageTypeList.vue';
-import Imgs from "@/components/img.vue";
+import ImageTypeList from '@/components/ImageTypeList.vue';
 //引入轮播组件
-import Wheel from "@/components/wheel.vue";
+import ImageSwiper from '@/components/ImageSwiper.vue';
+//引入预览组件
+import ImagePreview from '@/components/ImagePreview.vue';
+//引入背景图懒加载
+import LazyLoad from '@/utils/lazyLoad';
+
+import Imgs from "@/components/img.vue";
 export default {
-  components: { Imgs, Hue, Tie, Wheel },
+  components: { Imgs, Hue, Tie, ImageTypeList, ImageSwiper,ImagePreview },
   data() {
     return {
       // 控制颜色组件
@@ -87,9 +88,8 @@ export default {
       //控制车系组件
       tie: false,
       car: "车款",
-      imgShow: false,
-      // showImageList: false 控制图片的显示与隐藏
-      wheelShow: false //控制录播组件的显示与隐藏
+      showImageList: false,
+      showImageSwiper: false
     };
   },
   watch: {
@@ -114,9 +114,10 @@ export default {
       getImageList: "pic/getImageList"
     }),
     ...mapMutations({
-      setImageID: "pic/setImageId",
-      setSerialID: "pic/setSerialId",
-      upCurrent: "pic/upCurrent"
+      setImageID: 'pic/setImageId',
+      setSerialID: 'pic/setSerialId',
+      setCurrent: 'pic/setCurrent',
+      setImageList: 'pic/setImageList'
     }),
     //跳到颜色页面
     to() {
@@ -129,23 +130,26 @@ export default {
       this.tie = true;
     },
     // 点击分类进入分类列表
-    clickImageID(id) {
-      //让img组件显示
-      this.imgShow = true;
-      //给vux传入点击的id
+    clickImageID(id){
       this.setImageID(id);
-      // this.showImageList = true;
+     
+      this.showImageList = true;
     },
-    //点击进入轮播列表
-    showSwiper(item,index) {
-      this.upCurrent(index);
-      this.setImageID(item.Id);
-      this.wheelShow = true;
+    // 显示轮播
+    showSwiper(index, Count, List, ImageID){
+      this.setCurrent(index);
+      this.setImageList({
+        Count,
+        List,
+        ImageID
+      });
+      this.showImageSwiper = true;
     }
   },
-  created() {
+  async mounted() {
     this.setSerialID(this.$route.query.id);
-    this.getImageList(this.$route.query.id);
+    await this.getImageList(this.$route.query.id);
+    new LazyLoad('.pic');
   }
 };
 </script>
@@ -212,14 +216,21 @@ export default {
     }
   }
 }
-.imgS div {
+.imgS{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #eee;
+}
+.imgS div{
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, .5);
 }
 .imgS span {
   color: #fff;
   font-size: 0.28rem;
+  
 }
 .colour,
 .car {
