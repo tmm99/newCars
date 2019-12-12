@@ -1,13 +1,8 @@
 /*
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
-<<<<<<< HEAD:src/store/index.js
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 16:18:10
-=======
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-10 20:35:18
->>>>>>> e165cf250db2d7a4c9e8e72d943b5b32139e9751:call/src/store/index.js
+ * @LastEditTime: 2019-12-12 10:23:49
  * @Description: 
  */
 import Vue from 'vue'
@@ -24,13 +19,8 @@ import detail from "./modules/detail";
 import cityName from './modules/cityName'
 //引入经销商列表
 import CityList from './modules/cityList'
-<<<<<<< HEAD:src/store/index.js
-//颜色数据
-import hue from "./modules/hue";
-=======
 //引入城市数据
 import CityDatas from './modules/cityDatas'
->>>>>>> e165cf250db2d7a4c9e8e72d943b5b32139e9751:call/src/store/index.js
 export default new Vuex.Store({
   modules: {
     home,
@@ -38,11 +28,7 @@ export default new Vuex.Store({
     detail,
     cityName,
     CityList,
-<<<<<<< HEAD:src/store/index.js
-    hue
-=======
     CityDatas
->>>>>>> e165cf250db2d7a4c9e8e72d943b5b32139e9751:call/src/store/index.js
   },  
   plugins:[createLogger()]
 })
