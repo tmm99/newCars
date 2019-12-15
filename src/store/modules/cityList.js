@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-12-09 15:19:24
- * @LastEditTime: 2019-12-09 21:06:04
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-15 19:53:41
+ * @LastEditors: 席鹏昊
  * @Description: In User Settings EditS
  * @FilePath: \vueparamse:\call\src\store\modules\cityList.js
  */
@@ -21,12 +21,8 @@ const mutations={
 
 const actions={ 
     async getCityListS({commit},payload){
-        console.log(payload,"payload")
         let res =await getCityListS(payload)
-
-        // console.log(payload)
         commit('newCityLists',res.data.data.list)
-        console.log(res.data.data.list,2222)
     }
 
 }

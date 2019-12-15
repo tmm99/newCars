@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-09 00:06:44
- * @LastEditTime: 2019-12-11 19:34:44
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-15 19:57:20
+ * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\src\views\city\cityName.vue
  -->
@@ -50,11 +50,9 @@ export default {
         // 动画组件接值
         changeSon(itemLittleName){          //接收传回的点击小城市值
             this.changeCom(itemLittleName)  //接收传回的点击小城市值 继续传回到LowerPricre里
-            // console.log(itemLittleName)
         },
         //动画城市组件
         showCity(item){
-            console.log(item)
             this.id=item
             this.isShowCity=true
         },
@@ -65,10 +63,6 @@ export default {
     },
     created(){
         this.getcityList()
-        // console.log(this.getcityList)
-    },
-    mounted(){
-        console.log(this.cityList,'0000000000000000000000000000')
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-10 22:26:49
+ * @LastEditTime: 2019-12-15 19:54:35
  * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -93,7 +93,6 @@ export default {
   methods: {
     //底价路由
     lowerPrice(lowerId,carid) {
-      console.log(lowerId,carid);
       // console.log(this.detailData.list[0].car_id)
       this.$router.push({ path: "/lowPrice", query: { lowerid: lowerId,carid:carid} });
     },

@@ -2,22 +2,34 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-11 21:14:46
+ * @LastEditTime: 2019-12-14 09:14:57
  * @Description: 
  -->
 <template>
   <div class="home">
     <!-- loading 组件 -->
     <Loading v-show="loadingName"></Loading>
-    <div class="scroll" ref="roll">
+    <div class="scroll" ref="roll" v-stricky="letter">
       <div class="roll">
-        <List v-for="(item,index) in list" :key="index" :data="item" ref="A" :ball="ball"></List>
+        <List :id="item.title" v-for="(item,index) in list" :key="index" :data="item" :ball="ball"></List>
       </div>
     </div>
     <!-- 楼层组件 -->
-    <div class="floor" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
+    <div
+      class="floor"
+      @touchstart="touchstart"
+      @touchmove="touchmove"
+      @touchend="touchend"
+      ref="container"
+    >
       <p>#</p>
-      <p v-for="(item,index) in list" :key="index" :class="index" @click="to(index)">{{item.title}}</p>
+      <p
+        v-for="(item,index) in list"
+        :key="index"
+        :class="index"
+        :id="item.title"
+        @click="to(item.title)"
+      >{{item.title}}</p>
     </div>
     <!-- 侧边栏组件 -->
     <div :class="[isShow?'show':'shade']" class="box">
@@ -26,17 +38,25 @@
   </div>
 </template>
 <script>
-import BScroll from "better-scroll";
-import List from "../components/list";
-import PopUp from "../components/popUp";
-import Loading from "../components/loading";
+// import BScroll from "better-scroll";
+//主要渲染的部分组件
+import List from "../components/List";
+//侧边栏组件
+import PopUp from "../components/PopUp";
+//预加载组件
+import Loading from "../components/Loading";
+//引入vuex
 import { mapState, mapActions } from "vuex";
+//引入防抖
+import {debounce,throttle} from "../utils/util"
+
 export default {
   props: {},
   components: { List, PopUp, Loading },
   data() {
     return {
-      isShow: false
+      isShow: false,
+      letter: ""
     };
   },
   computed: {
@@ -51,75 +71,83 @@ export default {
       getMasterBrandList: "home/getMasterBrandList",
       sidebar: "home/sidebar"
     }),
-    to(i) {
-      let LH = this.$refs.A;
-      let el = LH[i].$el;
-      this.scroll.scrollToElement(el, 1000, 0, 0);
+    to(title) {
+      console.log(title);
+      this.idScroll = title;
+      //滚动的元素的top值就等于我点击的dao目
+      // document.querySelector(".scroll").scrollTop = document.querySelector(
+      //   `#${title}`
+      // ).offsetTop;
+
+      //自定义指令传入的值F
+      this.letter = title;
     },
     ball(id) {
-      this.sidebar(id);
+      // this.sidebar(id)
+      debounce(this.sidebar(id))
+      // throttle(this.sidebar(id))
+      
       this.isShow = true;
     },
     backs() {
       this.isShow = false;
     },
-    touchstart(e) {},
+    touchstart(e) {
+      this.offsetTop =
+        (window.innerHeight - this.$refs.container.offsetHeight) / 2;
+      let y = e.touches[0].pageY - this.offsetTop;
+      let index = Math.floor(y / 21);
+      index < 1
+        ? (index = 0)
+        : index > this.list.length - 1
+        ? (index = this.list.length - 1)
+        : null;
+      //滚动的元素的top值就等于我划过的标签的top
+      document.querySelector(".scroll").scrollTop = document.querySelector(
+        `#${this.list[index].title}`
+      ).offsetTop;
+    },
     touchmove(e) {
-      let arr = [
-        "166",
-        "183",
-        "205",
-        "223",
-        "245",
-        "272",
-        "290",
-        "315",
-        "335",
-        "358",
-        "378",
-        "402",
-        "426",
-        "449",
-        "467",
-        "488",
-        "506",
-        "534",
-        "555",
-        "579",
-        "600"
-      ];
-      arr.map((item, index) => {
-        if (e.touches[0].pageY > item && e.touches[0].pageY < item + 1) {
-          let LH = this.$refs.A;
-          let el = LH[index].$el;
-          this.scroll.scrollToElement(el, 0, 0, 0);
-        }
-      });
+      //给this添加属性   整个页面的高度减去container的高度除以2
+      this.offsetTop =
+        (window.innerHeight - this.$refs.container.offsetHeight) / 2;
+      //y等于划过的高减去this.offsetTop的高
+      let y = e.touches[0].pageY - this.offsetTop;
+      //向前取整判断出下标
+      let index = Math.floor(y / 21);
+      //给下标赋值
+      index < 1
+        ? (index = 0)
+        : index > this.list.length - 1
+        ? (index = this.list.length - 1)
+        : null;
+      //滚动的元素的top值就等于我划过的标签的top
+      // document.querySelector(".scroll").scrollTop = document.querySelector(
+      //   `#${this.list[index].title}`
+      // ).offsetTop;
+
+      //自定义指令传入的值
+      this.letter = this.list[index].title;
     },
     touchend(e) {}
   },
   created() {
     this.getMasterBrandList();
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.scroll = new BScroll(this.$refs.roll, {
-        scrollbar: true,
-        click: true
-      });
-    });
-  }
+  mounted() {}
 };
 </script>
 <style scoped lang="scss">
 .home {
   width: 100%;
   height: 100%;
+  background: #fff;
   position: relative;
 }
 .scroll {
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
 }
 .roll {
   width: 100%;
@@ -144,7 +172,7 @@ export default {
   }
 }
 .box {
-  position:fixed;
+  position: fixed;
   top: 0;
   right: 0;
   width: 72%;

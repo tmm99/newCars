@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 15:40:45
+ * @LastEditTime: 2019-12-13 16:11:58
  * @Description: 
  -->
 <template>
@@ -11,7 +11,7 @@
     <div class="content">
       <div class="list" v-for="(item1,index1) in item.GroupList" :key="index1" @click="to(item1.SerialID,item1)">
         <p>
-          <img :src="item1.Picture" alt />
+           <img  v-lazy="item1.Picture"/>
         </p>
         <p>
           <span>{{item1.AliasName}}</span>

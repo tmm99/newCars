@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-12-09 00:11:37
- * @LastEditTime: 2019-12-11 11:35:10
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-15 19:56:03
+ * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\src\store\modules\cityName.js
  */
@@ -15,19 +15,13 @@ const state={
 const mutations={
     newCityName(state,payload){
         state.cityList =payload
-        // console.log(state.cityList,"1111111111111")
     }   
 }
 
 const actions={
     async getcityList({commit},payload){
         let res=await getcityList()
-        // console.log(payload,"payload")
-        // console.log(res)
         commit('newCityName',res.data.data)
-        console.log(res.data.data,11111111)
-        // console.log(res.data.data[1].CityID,res.data.data[1].CityName)
-        // console.log(res)
     }
 }
 

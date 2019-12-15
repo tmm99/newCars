@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 19:28:08
+ * @LastEditTime: 2019-12-12 16:01:54
  * @Description: 
  */
 import Vue from 'vue'
@@ -29,7 +29,7 @@ const routes = [
   },
 {
   path:"/pic",
-  component :()=>import ("../views/pic.vue")
+  component :()=>import ("../views/Pic.vue")
 }
 ]
 

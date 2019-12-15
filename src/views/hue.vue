@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-05 11:36:29
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 16:32:38
+ * @LastEditTime: 2019-12-12 16:24:25
  * @Description: 
  -->
 <template>
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getModelImageYearColors: "hue/getModelImageYearColors"
+      getColour: "hue/getColour"
     }),
     ...mapMutations({
       alterIdx: "pic/alterId"
@@ -54,7 +54,6 @@ export default {
       this.indexs = i;
     },
     alterId(i,name) {
-      console.log(name)
       this.alterIdx(i);
       this.$emit("update:name",name)
       //让颜色组件消失
@@ -62,7 +61,7 @@ export default {
     }
   },
   created() {
-    this.getModelImageYearColors(this.$route.query.id);
+    this.getColour(this.$route.query.id);
   }
 };
 </script>

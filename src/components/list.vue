@@ -3,7 +3,7 @@ import { compileToFunctions } from 'vue-template-compiler';
  * @Author: 席鹏昊
  * @Date: 2019-11-29 19:45:23
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-10 15:56:54
+ * @LastEditTime: 2019-12-13 16:11:40
  * @Description: 
  -->
 <template>
@@ -14,24 +14,22 @@ import { compileToFunctions } from 'vue-template-compiler';
     </p>
     <div class="content" v-for="(item,index) in data.children" :key="index" @click="balls(item)">
       <p>
-        <img v-lazy="item.CoverPhoto" />
-        <!-- <img :src="item.CoverPhoto" alt /> -->
+        <img  v-lazy="item.CoverPhoto"/>
       </p>
       <p>{{item.Name}}</p>
     </div>
   </div>
 </template>
 <script>
-import Vue from "vue";
-import { Lazyload, Loading } from "vant";
-import loader from "sass-loader";
-Vue.use(Lazyload, {
-  preload: 2,
-  loading:
-    "http://cdn.duitang.com/uploads/item/201510/17/20151017095028_eGJMw.thumb.700_0.jpeg",
-  error:
-    "http://cdn.duitang.com/uploads/item/201507/09/20150709130218_F3Uf8.jpeg"
-});
+// import Vue from "vue";
+// import { Lazyload, Loading } from "vant";
+// import loader from "sass-loader";
+// Vue.use(Lazyload, {
+//   attempt:4,
+//   loading: require('../assets/1.jpg'),
+//   error: require('../assets/1.jpg')
+   
+// });
 
 export default {
   props: ["data", "ball"],
@@ -96,6 +94,9 @@ export default {
     align-items: center;
     font-size: 0.32rem;
     padding-left: 0.4rem;
+  }
+  img{
+    width: 100%;
   }
 }
 </style>

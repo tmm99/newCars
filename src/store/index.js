@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-12 10:23:49
+ * @LastEditTime: 2019-12-12 16:13:25
  * @Description: 
  */
 import Vue from 'vue'
@@ -21,6 +21,8 @@ import cityName from './modules/cityName'
 import CityList from './modules/cityList'
 //引入城市数据
 import CityDatas from './modules/cityDatas'
+//引入颜色数据
+import hue from "./modules/hue"
 export default new Vuex.Store({
   modules: {
     home,
@@ -28,7 +30,8 @@ export default new Vuex.Store({
     detail,
     cityName,
     CityList,
-    CityDatas
+    CityDatas,
+    hue
   },  
   plugins:[createLogger()]
 })

@@ -60,7 +60,7 @@ export default {
       scrollY: true,
       click: true,
       pullUpLoad: {
-        threshold: -180
+        threshold: -140
       },
       pullDownRefresh: {
         threshold: 50,

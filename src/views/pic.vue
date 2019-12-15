@@ -3,7 +3,7 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-11 20:03:54
+ * @LastEditTime: 2019-12-13 16:16:04
  * @Description:
  -->
 <template>
@@ -26,11 +26,7 @@ import { mapActions, mapState } from 'vuex';
             <div
               v-for="(item1,index1) in item.List"
               :key="index1"
-              :style="{
-              background:'url('+item1.Url+')',
-              backgroundSize:'cover',
-              backgroundRepeat:'no-repeat',
-              backgroundPosition:'center'}"
+              v-lazy:background-image="item1.Url"
               class="imgS"
               @click.self="showSwiper(item,index1)"
             >
@@ -69,14 +65,14 @@ import { mapActions, mapState } from 'vuex';
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 //引入颜色组件
-import Hue from "./hue";
+import Hue from "./Hue";
 //引入车款组件
-import Tie from "./tie";
+import Tie from "./Tie";
 //引入分类列表组件
 // import ImageTypeList from '@/components/ImageTypeList.vue';
-import Imgs from "@/components/img.vue";
+import Imgs from "@/components/Img.vue";
 //引入轮播组件
-import Wheel from "@/components/wheel.vue";
+import Wheel from "@/components/Wheel.vue";
 export default {
   components: { Imgs, Hue, Tie, Wheel },
   data() {
@@ -137,7 +133,7 @@ export default {
       // this.showImageList = true;
     },
     //点击进入轮播列表
-    showSwiper(item,index) {
+    showSwiper(item, index) {
       this.upCurrent(index);
       this.setImageID(item.Id);
       this.wheelShow = true;
@@ -216,6 +212,9 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  background-size: "cover";
+  background-repeat: "no-repeat";
+  background-position: "center";
 }
 .imgS span {
   color: #fff;

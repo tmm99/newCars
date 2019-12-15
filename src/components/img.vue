@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-03 20:15:43
  * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-11 20:04:49
+ * @LastEditTime: 2019-12-13 16:19:38
  * @Description: 
  -->
 <template>
@@ -22,7 +22,7 @@
           <span
             :key="index"
             v-for="(item, index) in slotProps.value"
-            :style="{backgroundImage: 'url('+item.Url.replace('{0}', item.LowSize)+')'}"
+             v-lazy:background-image="`${item.Url.replace('{0}',item.LowSize)}`"
             @click="showSwiper(index)"
           />
         </ul>
