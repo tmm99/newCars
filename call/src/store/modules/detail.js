@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-04 11:03:13
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-05 18:54:42
+ * @LastEditTime: 2019-12-15 20:35:45
  * @Description: 
  */
 import { getInfoAndListById } from '@/services/index';
@@ -12,7 +12,8 @@ const state = {
     Slist: [],//当前年份数据
     year: [],//所有年份
     current: "全部",//你所在的年份
-    carName:""   //传到底价的车名
+    carName:"" ,  //传到底价的车名
+    // CarID:0,  //车系id
 }
 //格式化数据
 function concatList(list) {
@@ -66,17 +67,17 @@ const mutations = {
         console.log(state.carName)
         //拿到年份
         let year = payload.list.map(item => item.market_attribute.year);
-        console.log(year, "nian")
+        // console.log(year, "nian")
         //去重 拿到应有的年份
         state.year = state.year.concat(["全部"],[...new Set(year)]);
-        console.log(state.year, "state")
+        // console.log(state.year, "state")
         let arr = []
         if (state.current === "全部") {
             arr = payload.list
         } else {
             arr = payload.list.filter(item => item.market_attribute.year == state.current)
         }
-        console.log(arr)
+        // console.log(arr)
         //排序
         let newSort = sortList(arr)
         //格式化数据
@@ -86,17 +87,26 @@ const mutations = {
         state.current=payload
         
         // console.log(this.commit("UpDateState"),"9+++++")
-        console.log(payload)
-    }
+        // console.log(payload)
+    },
+    // CarId(state,payload){
+    //     state.CarID=payload
+    // }
 }
 const actions = {
     async getInfoAndListById({ commit }, payload) {
         let res = await getInfoAndListById(payload)
         if (res.data.code === 1) {
             commit("UpDateState", res.data.data)
+             console.log(res.data.data)
         }
-        // console.log(res.data.data.AliasName)
-    }
+       
+        
+    },
+    // async getSerId({commit},payload){
+    //     let res=await getSerId(payload)
+    //     commit("CarId",res.data.data.SerialID)   
+    // }
 }
 export default {
     namespaced: true,

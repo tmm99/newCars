@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-09 15:19:24
- * @LastEditTime: 2019-12-09 21:06:04
+ * @LastEditTime: 2019-12-14 11:43:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings EditS
  * @FilePath: \vueparamse:\call\src\store\modules\cityList.js
@@ -10,7 +10,8 @@
 import {getCityListS} from '@/services/index'
 
 const state={
-    CityLists:[]
+    CityLists:[],
+     cityId:201,
 }
 
 const mutations={
@@ -21,11 +22,12 @@ const mutations={
 
 const actions={ 
     async getCityListS({commit},payload){
-        console.log(payload,"payload")
+        // console.log(payload,"payload")
         let res =await getCityListS(payload)
 
         // console.log(payload)
         commit('newCityLists',res.data.data.list)
+
         console.log(res.data.data.list,2222)
     }
 

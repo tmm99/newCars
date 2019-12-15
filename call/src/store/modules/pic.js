@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-03 09:11:49
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-06 18:48:11
+ * @LastEditTime: 2019-12-12 13:45:13
  * @Description: 
  */
 
@@ -18,7 +18,7 @@ const mutations = {
     //详情数据的更改
     upDateList(state, payload) {
         state.list = payload
-        console.log(state.list)
+        // console.log(state.list)
     },
      //loading方法
      headLoading(state,payload){

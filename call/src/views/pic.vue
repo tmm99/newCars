@@ -3,50 +3,60 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-07 11:51:50
+ * @LastEditTime: 2019-12-15 20:47:17
  * @Description: 
  -->
 <template>
   <div class="pic">
     <Load v-show="loadingName"></Load>
+    <!-- 头部 -->
     <div class="title">
-      <p>颜色</p>
-      <p>车款</p>
+      <p @click="color">全部颜色</p>
+      <p @click="carStyle">全部车款</p>
     </div>
+    <!-- 图片渲染 -->
     <div class="main"> 
       <div class="img" v-for="(item,index) in list" :key="index">
-           <li v-for="(item1,index1) in item.List" :key="index1" >
+         <li v-for="(item1,index1) in item.List" :key="index1" >
             <img   :style="{background: 'url( '+ item1.Url.replace('{0}',3) +')', backgroundPosition:'center',backgroundRepeat:'no-repeat',backgroundSize:'cover'}"/>      
-            <div class="imgIndex"></div>
-            <!-- <div>  :src="item1.Url.replace('{0}',3)"   {background: 'url( '+ item1.Url.replace('{0}',3) +') no-repeat  30%,center'}
-              <p>{{item1.Name}}</p> 
-              <p>{{item1.Count}}张</p>  
-            </div>     :index1==0 -->
+           <div class="imgIndex" v-if="index1==0">
+             <p >{{item.Name}}</p>
+             <p>{{item.Count}}</p>
+           </div>
           </li>
-        
       </div>
     </div>
+    <!-- 颜色组件 -->
+    <AllColor :class="showColor?'Show':'Hide'" class="Scolor" :colorSonCom='colorSonCom' :carid='CarId'></AllColor>
+    <!-- 车款组件 -->
+    <AllCarStyle :class="showCar?'Show':'Hide'" class="Scolor" :carSonCom='carSonCom'></AllCarStyle>
+
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import { Image } from 'vant';
+import { Image, Card } from 'vant';
 import Imgs from "@/components/img.vue";
 //懒加载
 import loader from 'sass-loader';
 
-
-
 //引入loading
-import Load from './lowerPrice/Loadding.vue'
+import Load from './Loadding.vue'
 // import class from '@vue/cli-service';
+
+//引入图片组件
+import AllColor from './AllColor.vue'
+//引入车款组件
+import AllCarStyle from './AllCarStyle.vue'
 
 export default {
   props: {},
-  components: { Imgs,Load },
+  components: { Imgs,Load,AllColor,AllCarStyle },
   data() {
     return {
-     
+      showColor:false,
+      showCar:false,
+      CarId:0,
     };
   },
   computed: {
@@ -58,13 +68,35 @@ export default {
   methods: {
     ...mapActions({
       getImageList: "pic/getImageList"
-    })
+    }),
+    //全部颜色
+    color(){
+         this.showColor=true
+    },
+    //颜色组件取消
+    colorSonCom(){
+        this.showColor=false
+    },
+    //全部车款
+    carStyle(){
+      this.showCar=true
+    },
+   //车款组件取消
+  carSonCom(){
+    this.showCar=false
+  }
+
   },
   created() {
     this.lists = this.getImageList(this.$route.query.id);
-    console.log(this.lists);
+    console.log(this.$route.query.id);
+  this.CarId=this.$route.query.id;
   },
-  mounted() {}
+  mounted() {
+    // console.log(this)
+
+    // console.log(this.list)
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -104,13 +136,14 @@ export default {
     -webkit-overflow-scrolling: touch;
     border-bottom: .4rem solid #f4f4f4;
    
+   
 li{
     position: relative;
+    width: 101px;
+    height: 93px;
     float: left;
-    margin-right: .03rem;
-    margin-bottom: .06rem;
-    width: 2.46rem;
-    height: 2.46rem;
+    margin-right:5px;
+    margin-bottom:3px;
     padding: 0;
     list-style: none;
     img{
@@ -118,32 +151,47 @@ li{
         height: 100%;
     }
     .imgIndex{
-      background: rgba(0,0,0,.3);
+      background: rgba(0,0,0,.6);
       position: absolute;
       top:0;
       left: 0;
-      width: 10rem;
-      height: 6.46rem;
-      
-
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+        p{
+          padding-top: 5px;
+        }
     }
 
 }
   .img {
     width: 100%;
     height: 200px;
-    div {
-      width: 33%;
-      height: 50px;
-      p {
-        width: 100%;
-        height: 100%;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
   }
+
 }
+.Scolor{
+  width: 100%;
+  height: 100%;
+  background:#eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.Show{
+  transition-delay: 0s;
+  transition-duration: 1s;
+  transform: translateY(0%);
+  z-index: 999;
+}
+.Hide{
+  transition-delay: 0s;
+  transition-duration: 1s;
+  transform: translateY(100%)
+}
+
 </style>

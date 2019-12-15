@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-12-09 00:11:37
- * @LastEditTime: 2019-12-11 11:35:10
+ * @LastEditTime: 2019-12-12 13:44:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\src\store\modules\cityName.js
@@ -25,7 +25,7 @@ const actions={
         // console.log(payload,"payload")
         // console.log(res)
         commit('newCityName',res.data.data)
-        console.log(res.data.data,11111111)
+        // console.log(res.data.data,11111111)
         // console.log(res.data.data[1].CityID,res.data.data[1].CityName)
         // console.log(res)
     }
