@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-03 09:08:57
- * @LastEditTime: 2019-12-16 15:08:39
+ * @LastEditTime: 2019-12-16 15:33:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \call\src\components\detail\Detail.vue
@@ -95,7 +95,6 @@ export default {
       console.log(lowerId,carid);
       // console.log(this.detailData.list[0].car_id)
       this.$router.push({ path: "/lowPrice", query: { lowerid: lowerId,carid:carid} });
-      _hmt.push(['_trackEvent', "详情", "跳转",carid]);
     },
     //顶部图片路由
     goPic(newId) {
@@ -117,6 +116,7 @@ export default {
       this.name = i;
       this.UpCurrent(i);
       this.getInfoAndListById(this.$route.query.SerialID);
+      _hmt.push(['_trackEvent',"详情","详情"]);
     },
     bottomPrice(){
        this.$router.push("/lowPrice");

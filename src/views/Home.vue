@@ -1,8 +1,8 @@
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-14 09:14:57
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-16 16:42:09
  * @Description: 
  -->
 <template>
@@ -40,11 +40,11 @@
 <script>
 // import BScroll from "better-scroll";
 //主要渲染的部分组件
-import List from "../components/List";
+import List from "../components/list";
 //侧边栏组件
-import PopUp from "../components/PopUp";
+import PopUp from "../components/popUp";
 //预加载组件
-import Loading from "../components/Loading";
+import Loading from "../components/loading";
 //引入vuex
 import { mapState, mapActions } from "vuex";
 //引入防抖

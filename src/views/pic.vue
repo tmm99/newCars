@@ -2,8 +2,8 @@ import { mapActions, mapState } from 'vuex';
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-13 16:16:04
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-16 16:46:11
  * @Description:
  -->
 <template>
@@ -65,14 +65,14 @@ import { mapActions, mapState } from 'vuex';
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 //引入颜色组件
-import Hue from "./Hue";
+import Hue from "./hue";
 //引入车款组件
-import Tie from "./Tie";
+import Tie from "./tie";
 //引入分类列表组件
 // import ImageTypeList from '@/components/ImageTypeList.vue';
-import Imgs from "@/components/Img.vue";
+import Imgs from "@/components/img.vue";
 //引入轮播组件
-import Wheel from "@/components/Wheel.vue";
+import Wheel from "@/components/wheel.vue";
 export default {
   components: { Imgs, Hue, Tie, Wheel },
   data() {
