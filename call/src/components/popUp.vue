@@ -1,17 +1,13 @@
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
- * @LastEditors: 席鹏昊
-<<<<<<< HEAD
- * @LastEditTime: 2019-12-01 20:35:02
-=======
- * @LastEditTime: 2019-12-03 10:43:24
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-05 18:44:06
  * @Description: 
  -->
 <template>
   <div class="popUp">
-    <p class="title" @click="back">{{item.GroupName}}</p>
+    <p class="title" @click="back"><span>{{item.GroupName}}</span></p>
     <div class="content">
       <div class="list" v-for="(item1,index1) in item.GroupList" :key="index1" @click="to(item1.SerialID,item1)">
         <p>
@@ -37,16 +33,13 @@ export default {
     back() {
       this.backs();
     },
-    to(i,item) {
-<<<<<<< HEAD
-        console.log(item)
-=======
->>>>>>> 0ccf2a91b114997ca269e9a2443fdaca3d49e5ee
+    to(i,item1) {
       this.$router.push({path:"/details",query:{SerialID:i}});
-     
     }
   },
-  created() {},
+  created() {
+    console.log()
+  },
   mounted() {}
 };
 </script>
@@ -57,25 +50,35 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  
 }
 .title {
   width: 100%;
-  height: 45px;
-  line-height: 45px;
-  background: #ccc;
+  height: .48rem;
+  line-height: .48rem;
+  background: #f2f2f2;
+  color: #717171;
+  font-size: .28rem;
+  span{
+    margin-left: 1px;
+      padding-left: .3rem;
+  }
+
 }
 .content {
   width: 100%;
   flex: 1;
   .list {
     width: 100%;
-    height: 80px;
+    height: 1.4rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: .02rem solid #ddd;
+    
     p:nth-child(1) {
-      width: 30%;
-      height: 100%;
+      margin: 0 .1rem 0 .2rem;
+      width: 1.8rem;
+      height: 1.2rem;
       img {
         width: 100%;
         height: 100%;
@@ -91,7 +94,8 @@ export default {
         height: 60%;
         display: flex;
         align-items: center;
-        font-size: 20px;
+        font-size: .34rem;
+        color: #5f687a;
       }
       span:last-child {
         width: 100%;
@@ -99,9 +103,10 @@ export default {
         color: red;
         display: flex;
         align-items: flex-start;
-        font-size: 12px;
+        font-size: .28rem;
       }
     }
   }
+ 
 }
 </style>
