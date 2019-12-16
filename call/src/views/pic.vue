@@ -3,60 +3,50 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-16 16:01:17
+ * @LastEditTime: 2019-12-16 16:20:19
  * @Description: 
  -->
 <template>
   <div class="pic">
     <Load v-show="loadingName"></Load>
-    <!-- 头部 -->
     <div class="title">
       <p @click="color">全部颜色</p>
       <p @click="carStyle">全部车款</p>
     </div>
-    <!-- 图片渲染 -->
     <div class="main"> 
       <div class="img" v-for="(item,index) in list" :key="index">
-         <li v-for="(item1,index1) in item.List" :key="index1" >
+           <li v-for="(item1,index1) in item.List" :key="index1" >
             <img   :style="{background: 'url( '+ item1.Url.replace('{0}',3) +')', backgroundPosition:'center',backgroundRepeat:'no-repeat',backgroundSize:'cover'}"/>      
-           <div class="imgIndex" v-if="index1==0">
-             <p >{{item.Name}}</p>
-             <p>{{item.Count}}</p>
-           </div>
+            <div class="imgIndex"></div>
+            <!-- <div>  :src="item1.Url.replace('{0}',3)"   {background: 'url( '+ item1.Url.replace('{0}',3) +') no-repeat  30%,center'}
+              <p>{{item1.Name}}</p> 
+              <p>{{item1.Count}}张</p>  
+            </div>     :index1==0 -->
           </li>
+        
       </div>
     </div>
-    <!-- 颜色组件 -->
-    <AllColor :class="showColor?'Show':'Hide'" class="Scolor" :colorSonCom='colorSonCom' :carid='CarId'></AllColor>
-    <!-- 车款组件 -->
-    <AllCarStyle :class="showCar?'Show':'Hide'" class="Scolor" :carSonCom='carSonCom'></AllCarStyle>
-
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import { Image, Card } from 'vant';
+import { Image } from 'vant';
 import Imgs from "@/components/img.vue";
 //懒加载
 import loader from 'sass-loader';
 
-//引入loading
-import Load from './Loadding.vue'
-// import class from '@vue/cli-service';
 
-//引入图片组件
-import AllColor from './AllColor.vue'
-//引入车款组件
-import AllCarStyle from './AllCarStyle.vue'
+
+//引入loading
+import Load from './lowerPrice/Loadding.vue'
+// import class from '@vue/cli-service';
 
 export default {
   props: {},
-  components: { Imgs,Load,AllColor,AllCarStyle },
+  components: { Imgs,Load },
   data() {
     return {
-      showColor:false,
-      showCar:false,
-      CarId:0,
+     
     };
   },
   computed: {
@@ -89,14 +79,9 @@ export default {
   },
   created() {
     this.lists = this.getImageList(this.$route.query.id);
-    console.log(this.$route.query.id);
-  this.CarId=this.$route.query.id;
+    console.log(this.lists);
   },
-  mounted() {
-    // console.log(this)
-
-    // console.log(this.list)
-  }
+  mounted() {}
 };
 </script>
 <style scoped lang="scss">
@@ -114,6 +99,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   p {
     flex: 1;
     text-align: center;
@@ -135,14 +121,13 @@ export default {
     -webkit-overflow-scrolling: touch;
     border-bottom: .4rem solid #f4f4f4;
    
-   
 li{
     position: relative;
-    width: 101px;
-    height: 93px;
     float: left;
-    margin-right:5px;
-    margin-bottom:3px;
+    margin-right: .03rem;
+    margin-bottom: .06rem;
+    width: 2.46rem;
+    height: 2.46rem;
     padding: 0;
     list-style: none;
     img{
@@ -150,47 +135,33 @@ li{
         height: 100%;
     }
     .imgIndex{
-      background: rgba(0,0,0,.6);
+      background: rgba(0,0,0,.3);
       position: absolute;
       top:0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-        p{
-          padding-top: 5px;
-        }
+      width: 10rem;
+      height: 6.46rem;
+      
+
     }
 
 }
   .img {
     width: 100%;
     height: 200px;
+    div {
+      width: 33%;
+      height: 50px;
+      p {
+        width: 100%;
+        height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
-
-}
-.Scolor{
-  width: 100%;
-  height: 100%;
-  background:#eee;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-.Show{
-  transition-delay: 0s;
-  transition-duration: 1s;
-  transform: translateY(0%);
-  z-index: 999;
-}
-.Hide{
-  transition-delay: 0s;
-  transition-duration: 1s;
-  transform: translateY(100%)
 }
 
 </style>

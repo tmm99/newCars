@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-12-10 20:02:54
- * @LastEditTime: 2019-12-16 16:21:47
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-15 19:44:09
+ * @LastEditors: 席鹏昊
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\src\store\modules\cityDatas.js
  */
@@ -21,7 +21,6 @@ const mutations= {
 const actions={
     async getCityDatas({commit},payload){
        let res=await getCityDatas(payload)
-       console.log(res.data.data)
         commit('getNewData',res.data.data)
     }
 }
