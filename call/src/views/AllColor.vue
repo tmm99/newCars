@@ -2,7 +2,7 @@ import { mapActions, mapState } from 'vuex';
 <!--
  * @Author: your name
  * @Date: 2019-12-12 19:42:39
- * @LastEditTime: 2019-12-15 21:01:54
+ * @LastEditTime: 2019-12-16 12:03:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\src\views\AllColor.vue
@@ -10,9 +10,13 @@ import { mapActions, mapState } from 'vuex';
 <template>
     <div class="colorBox">
         <div class="colorHead" @click="concelColor">全部颜色</div>
-        <div class="colorDate">2017</div>
+        <div class="colorDate">
+            <!-- <div  > -->
+                 <p v-for="(val,key,index) in getYears" :key="index" class="yearList">{{key}}</p>
+            <!-- </div> -->
+        </div>
         <div class="colorCont">颜色</div>
-        <!-- <div>{{carid}}</div> -->
+       
     </div>
 </template>
 <script>
@@ -47,7 +51,7 @@ export default {
        
     },
     mounted(){
-        console.log(this.getYear)
+        console.log(this.getYears)
     }
 }
 </script>
@@ -71,6 +75,18 @@ export default {
             line-height: 30px;
             background: #fff;
             margin-top: 10px;
+            display: flex;
+            overflow: scroll;
+            .yearList{
+                display: flex;
+                flex-wrap: nowrap;
+                width: 100px;
+                overflow: scroll;
+                flex-shrink: inherit;
+                // background: #eee;
+                height: 30px;
+                // line-height: 30px;
+            }
 
         }
         .colorCont{
