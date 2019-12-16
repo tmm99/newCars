@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 19:00:34
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-13 19:39:06
+ * @LastEditTime: 2019-12-16 15:56:36
  * @Description: 
  */
 //主业数据
@@ -21,3 +21,6 @@ export * from './modules/cityList'
 export * from './modules/cityDatas'
 //年份数据
 export * from './modules/getYear'
+
+export * from "./modules/home";
+export * from "./modules/sidebar"

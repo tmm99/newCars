@@ -3,7 +3,7 @@ import { mapActions, mapState } from 'vuex';
  * @Author: 席鹏昊
  * @Date: 2019-12-03 13:40:10
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-15 20:47:17
+ * @LastEditTime: 2019-12-16 16:01:17
  * @Description: 
  -->
 <template>
@@ -114,7 +114,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   p {
     flex: 1;
     text-align: center;

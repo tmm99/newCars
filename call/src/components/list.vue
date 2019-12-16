@@ -2,8 +2,8 @@ import { compileToFunctions } from 'vue-template-compiler';
 <!--
  * @Author: 席鹏昊
  * @Date: 2019-11-29 19:45:23
- * @LastEditors: 席鹏昊
- * @LastEditTime: 2019-12-04 16:50:30
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2019-12-16 15:55:26
  * @Description: 
  -->
 <template>
@@ -65,20 +65,18 @@ export default {
 }
 .title {
   width: 100%;
-  height: .4rem;
-  background: #f4f4f4;;
-  line-height: .4rem;
-  font-size: .28rem;
+  height: .82rem;
+  background: #ccc;
+  line-height: .82rem;
   b {
-    margin-left:.3rem;
-    color: #aaa;
+    margin-left:.20rem;
   }
 }
 .content {
   margin: 0 .3rem;
   width: 90%;
   display: flex;
-  border-bottom: 1px solid #ddd;
+  border-bottom: .02rem solid #ccc;
   p:nth-child(1) {
     width: 15%;
     height: 1rem;

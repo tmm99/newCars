@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-12-02 18:38:48
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-10 16:02:43
+ * @LastEditTime: 2019-12-16 15:59:59
  * @Description: 
  -->
 <template>
@@ -14,14 +14,14 @@
         <List v-for="(item,index) in list" :key="index" :data="item" ref="A" :ball="ball"></List>
       </div>
     </div>
-    <!-- 楼层组件 -->
+  <!-- 楼层组件 -->
     <div class="floor" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
       <p>#</p>
       <p v-for="(item,index) in list" :key="index" :class="index" @click="to(index)">{{item.title}}</p>
     </div>
     <!-- 侧边栏组件 -->
     <div :class="[isShow?'show':'shade']" class="box">
-      <PopUp v-for="(item,index) in Rlist " :key="index" :item="item" :backs="backs"></PopUp>
+      <PopUp v-for="(item,index) in Rlist " :key="index" :item="item" :backs="backs" ></PopUp>
     </div>
   </div>
 </template>
@@ -129,8 +129,7 @@ export default {
   width: 0.4rem;
   position: fixed;
   top: 50%;
-  right: 0;
-  padding-left: 0.2rem;
+  right: .20rem;
   transform: translateY(-50%);
   height: auto;
   color: #666666;

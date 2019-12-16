@@ -2,7 +2,7 @@
  * @Author: 席鹏昊
  * @Date: 2019-11-30 11:37:48
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2019-12-05 18:44:06
+ * @LastEditTime: 2019-12-16 15:56:06
  * @Description: 
  -->
 <template>
@@ -33,7 +33,7 @@ export default {
     back() {
       this.backs();
     },
-    to(i,item1) {
+    to(i,item) {
       this.$router.push({path:"/details",query:{SerialID:i}});
     }
   },
@@ -54,16 +54,9 @@ export default {
 }
 .title {
   width: 100%;
-  height: .48rem;
-  line-height: .48rem;
-  background: #f2f2f2;
-  color: #717171;
-  font-size: .28rem;
-  span{
-    margin-left: 1px;
-      padding-left: .3rem;
-  }
-
+  height: .82rem;
+  line-height: .82rem;
+  background: #ccc;
 }
 .content {
   width: 100%;
@@ -73,12 +66,11 @@ export default {
     height: 1.4rem;
     display: flex;
     align-items: center;
-    border-bottom: .02rem solid #ddd;
+    border-bottom: .02rem solid #ccc;
     
     p:nth-child(1) {
-      margin: 0 .1rem 0 .2rem;
       width: 1.8rem;
-      height: 1.2rem;
+      height: 100%;
       img {
         width: 100%;
         height: 100%;
@@ -95,7 +87,6 @@ export default {
         display: flex;
         align-items: center;
         font-size: .34rem;
-        color: #5f687a;
       }
       span:last-child {
         width: 100%;
