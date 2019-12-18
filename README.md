@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-02 19:40:53
- * @LastEditTime: 2019-12-17 20:53:40
- * @LastEditors: your name
+ * @LastEditTime : 2019-12-17 21:02:37
+ * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vueparamse:\call\README.md
  -->
@@ -67,10 +67,41 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 5.请求优化
 
+#### 详情页面
+1.排序切换
+
+2.跳转传送id
+
+3.底部定位
+
+4.顶部图片正确渲染
+
+5.组件间传值
+
 #### 图片页面
 封装图片背景，懒加载
-#### 发布上线
 
+#### 车款页面
+渲染数据
+
+#### 城市页面
+- 汽车数据
+  - 通过接参渲染数据
+- 表单数据
+  - 正则校验 
+- 城市
+  - 默认城市
+  - 动画组件
+  - 组件传参
+  - 渲染城市省份数据
+  - 渲染城市数据
+- 经销商
+  - 默认数据
+  - 组件传参
+  - 点击城市更改表单城市
+  - 更改经销商数据
+  
+#### 发布上线
 
 - [x]  区分vue的dist
 - [x] 服务端开启gzip
@@ -81,6 +112,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [x] 配置Https,优化资源加载协议(把资源头部去掉,自适应当前页面的协议)
 - [x] 路由懒加载
 - [ ]  UI库的按需加载
-- [ ]  Vuex去掉Logger
-- [ ]  第三方依赖的抽离，发布到CDM
-- [ ]  优化资源加载，移动端300k以内
+- [x]  Vuex去掉Logger
+- [x]  第三方依赖的抽离，发布到CDM
+- [x]  优化资源加载，移动端300k以内
+
